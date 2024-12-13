@@ -1,0 +1,44 @@
+/* Asegúrate de que el contenedor principal se alinee correctamente */
+.parent {
+  display: flex; /* Usamos Flexbox en el contenedor padre */
+  justify-content: flex-end; /* Alinea los elementos a la derecha */
+  width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
+}
+
+/* Contenedor con margen izquierdo automático para alinear a la derecha */
+.container {
+  width: 300px;
+  margin-left: auto; /* Empuja el contenedor hacia la derecha */
+  margin-right: 0;   /* Asegura que no haya margen derecho adicional */
+  padding: 10px;
+  border: 1px solid #000000;
+}
+
+/* Asegúrate de que los inputs tengan el mismo ancho */
+input {
+  padding: 8px;
+  width: 200px;
+  margin-bottom: 15px; /* Espacio entre inputs */
+}
+
+/* El margen de los divs puede interferir, así que revisamos esto */
+div {
+  margin-bottom: 15px;
+}
+
+/* Etiquetas con margen para un mejor espaciado */
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* Estilos para los encabezados */
+h2 {
+  color: #007bff;
+}
+
+h3 {
+  margin-top: 20px;
+  color: #28a745;
+}
