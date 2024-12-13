@@ -5,6 +5,7 @@ import styles from './LeftRightComponent.css';
 
 import DatosNutricionales from './DatosNutricionales';
 import RightAlignedComponent from './RightAlignedComponent.js';
+import Centercontainer from  './centercontainer.js';
 
 function LeftRightComponent() {
 
@@ -19,9 +20,13 @@ return (
       <div className="left-container">
         <DatosNutricionales setValoresNutricionales={setValoresNutricionales} />
       </div>
+      <div className="center-container">
+        <Centercontainer/>
+      </div>
       <div className="right-container">
         <RightAlignedComponent/>
       </div>
+     
     </div>
 
 

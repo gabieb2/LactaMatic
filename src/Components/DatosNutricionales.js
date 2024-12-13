@@ -45,12 +45,12 @@ function DatosNutricionales() {
             value={valoresNutricionales.lactosa}
             onChange={handleChange}
             placeholder="Ingresa cantidad de lactosa"
-          />
-        </div>
+          /> 
+       </div>
         <h3>Valores ingresados:</h3>
           <p>Proteínas: {valoresNutricionales.primerConjunto.proteinas} g</p>
           <p>Lípidos: {valoresNutricionales.primerConjunto.lipidos} g</p>
-          <p>Lactosa: {valoresNutricionales.primerConjunto.lactosa} g</p>
+          <p>Lactosa: {valoresNutricionales.primerConjunto.lactosa} g</p> 
        
       </div>
     </div>

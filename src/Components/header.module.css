@@ -1,7 +1,38 @@
-.header {
+.headerea{
     background-color: #007bff;
     color: white;
     padding: 20px;
     text-align: center;
   }
+
+  .header {
+    display: flex;
+  align-items: center; /* Centra los elementos verticalmente */
+  justify-content: flex-start; /* Alinea los elementos a la izquierda (imagen en la izquierda) */
+  padding: 20px;
+  background-color: #007bff;
+  border-bottom: 2px solid #007bff;
+  max-width: auto; /* Limita el ancho del header */
+  margin: 0 auto; /* Centra el header horizontalmente en la pantalla */
+  }
+
+  .headertitle-container {
+    display: flex;
+    justify-content: center; /* Centra el título en el contenedor */
+    flex-grow: 1; /* Hace que el contenedor ocupe todo el espacio restante */
+  }
+
+  .headerimage {
+    width: 300px;     /* Ancho de la imagen */
+    height: 200px;    /* Altura de la imagen */
+    border-radius: 40%; /* Hace que la imagen sea circular */
+  }
   
+  /* Estilo del título del header */
+  .headertitle {
+    font-size: 45px;
+    color: #ffffff;
+    margin-left: 15%;
+    margin-top: 40px;
+    text-align: center;/* Espacio entre la imagen y el texto */
+  }

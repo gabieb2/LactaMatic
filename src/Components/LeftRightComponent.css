@@ -1,33 +1,41 @@
 /* Contenedor principal */
 .parent {
-    display: flex; /* Usamos Flexbox para alinear los elementos en una fila */
-    justify-content: space-between; /* Alinea los contenedores a los lados */
-    width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
-    padding: 0px;
-  }
-  
-  /* Estilo para el contenedor izquierdo */
-  .left-container {
-    width: 35%; /* Puedes ajustar el tamaño que desees */
-    padding: 15px;
-    border: 1px solid #000000;
-    background-color: #f0f0f0;
-  }
-  
-  /* Estilo para el contenedor derecho */
-  .right-container {
-    width: 35%; /* Puedes ajustar el tamaño que desees */
-    padding: 15px;
-    border: 1px solid #000000;
-    background-color: #f0f0f0;
-  }
-  
-  
-  h2 {
-    color: #007bff;
-  }
-  
-  p {
-    color: #555555;
-  }
-  
+  display: flex; /* Usamos Flexbox para alinear los elementos en una fila */
+  justify-content: space-between; /* Distribuye los contenedores con espacio entre ellos */
+  width: 100%; /* Ocupa todo el ancho disponible */
+  padding: 0px;
+  gap: 20px; /* Espacio entre los contenedores */
+}
+
+/* Estilo para el contenedor izquierdo */
+.left-container {
+  width: 30%; /* Ajusta el tamaño según sea necesario */
+  padding: 15px;
+  border: 1px solid #000000;
+  background-color: #f0f0f0;
+}
+
+/* Estilo para el contenedor central */
+.center-container {
+  width: 30%; /* Ajusta el tamaño según sea necesario */
+  padding: 15px;
+  border: 1px solid #000000;
+  background-color: #e0f7fa; /* Color de fondo para distinguirlo */
+}
+
+/* Estilo para el contenedor derecho */
+.right-container {
+  width: 30%; /* Ajusta el tamaño según sea necesario */
+  padding: 15px;
+  border: 1px solid #000000;
+  background-color: #f0f0f0;
+}
+
+/* Estilo general para títulos y párrafos */
+h2 {
+  color: #007bff;
+}
+
+p {
+  color: #555555;
+}

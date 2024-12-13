@@ -56,7 +56,7 @@ function RightAlignedComponent() {
           <h3>Valores ingresados:</h3>
           <p>Proteínas: {valoresNutricionales.segundoConjunto.proteinas} g</p>
           <p>Lípidos: {valoresNutricionales.segundoConjunto.lipidos} g</p>
-          <p>Lactosa: {valoresNutricionales.segundoConjunto.lactosa} g</p>
+          <p>Lactosa: {valoresNutricionales.segundoConjunto.h3lactosa} g</p>
           
           </div>
           </div>

@@ -19,8 +19,8 @@ function BotonContainer() {
 
   return (
     <div className="buttonFort">
-      <h3>Valores Leche Recibidos:</h3>
-      <p>Proteínas: {valoresNutricionales.primerConjunto.proteinas} g</p>
+      <h3>Fortificación basada en proteina para prematuros:</h3>
+      {/*<p>Proteínas: {valoresNutricionales.primerConjunto.proteinas} g</p>
       <p>Lípidos: {valoresNutricionales.primerConjunto.lipidos} g</p>
       <p>Lactosa: {valoresNutricionales.primerConjunto.lactosa} g</p>
 
@@ -28,7 +28,7 @@ function BotonContainer() {
 
       <p>Proteínas: {valoresNutricionales.segundoConjunto.proteinas} g</p>
       <p>Lípidos: {valoresNutricionales.segundoConjunto.lipidos} g</p>
-      <p>Lactosa: {valoresNutricionales.segundoConjunto.lactosa} g</p>
+      <p>Lactosa: {valoresNutricionales.segundoConjunto.lactosa} g</p> */}
 
       <button onClick={() => handleCalculate()}>
         Calcular fortificación
