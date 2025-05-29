@@ -9,5 +9,5 @@ const Input = ({ placeholder, value, onChange, type }) => {
     className="w-full p-2 border border-gray-300 rounded-md"
   />;
 };
-
+//a
 export default Input;
