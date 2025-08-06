@@ -1,38 +1,138 @@
-.headerea{
-    background-color: #007bff;
-    color: white;
-    padding: 20px;
-    text-align: center;
-  }
+/* header.module.css */
 
+.header {
+  height: 70px;
+  background: linear-gradient(90deg, #1a365d, #2c5282);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logoCircle {
+  width: 44px;
+  height: 44px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.headerimage {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.headertitle {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  line-height: 1;
+}
+
+.headersubtitle {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1;
+}
+
+.navigation {
+  display: flex;
+  gap: 10px;
+}
+
+.navItem {
+  padding: 8px 16px;
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.navItem:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.navItemActive {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #2c5282;
+  font-weight: bold;
+}
+
+.navItemActive:hover {
+  background-color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .header {
-    display: flex;
-  align-items: center; /* Centra los elementos verticalmente */
-  justify-content: flex-start; /* Alinea los elementos a la izquierda (imagen en la izquierda) */
-  padding: 20px;
-  background-color: #007bff;
-  border-bottom: 2px solid #007bff;
-  max-width: auto; /* Limita el ancho del header */
-  margin: 0 auto; /* Centra el header horizontalmente en la pantalla */
-  }
-
-  .headertitle-container {
-    display: flex;
-    justify-content: center; /* Centra el título en el contenedor */
-    flex-grow: 1; /* Hace que el contenedor ocupe todo el espacio restante */
-  }
-
-  .headerimage {
-    width: 300px;     /* Ancho de la imagen */
-    height: 200px;    /* Altura de la imagen */
-    border-radius: 40%; /* Hace que la imagen sea circular */
+    padding: 0 20px;
+    flex-direction: column;
+    height: auto;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    gap: 15px;
   }
   
-  /* Estilo del título del header */
-  .headertitle {
-    font-size: 45px;
-    color: #ffffff;
-    margin-left: 15%;
-    margin-top: 40px;
-    text-align: center;/* Espacio entre la imagen y el texto */
+  .logoContainer {
+    gap: 10px;
   }
+  
+  .headertitle {
+    font-size: 20px;
+  }
+  
+  .headersubtitle {
+    font-size: 12px;
+  }
+  
+  .navigation {
+    gap: 8px;
+  }
+  
+  .navItem {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .titleContainer {
+    display: none; /* Ocultar subtitle en móviles muy pequeños */
+  }
+  
+  .headersubtitle {
+    display: none;
+  }
+  
+  .navigation {
+    gap: 5px;
+  }
+  
+  .navItem {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+}
