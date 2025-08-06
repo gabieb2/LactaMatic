@@ -1,70 +1,227 @@
-# Getting Started with Create React App
+# Chechomatic  - Calculadora de Fortificación de Leche Humana
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Descripción
 
-## Available Scripts
+Chechomatic es una aplicación web inteligente diseñada para optimizar la fortificación de leche humana en contextos sanitarios, especialmente para la alimentación de bebés prematuros. La aplicación implementa algoritmos basados en evidencia clínica para calcular las concentraciones óptimas de fortificador según las necesidades nutricionales específicas de cada paciente.
 
-In the project directory, you can run:
+## Características Principales
 
-### `npm start`
+### 🔬 **Algoritmo Científicamente Validado**
+- Basado en datos reales de composición de leche humana
+- Implementa recomendaciones ESPGHAN para prematuros
+- Rangos objetivo nutricionales: 3.5-4.5 g/kg/día de proteína
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 📊 **Entrada de Datos Flexible**
+- **Método Manual**: Ingreso directo de macronutrientes (Proteína/Lactosa/Lípidos g/100ml)
+- **Método Estimado**: Selección automática basada en término/pretérmino + días de puerperio
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 🧮 **Cálculos Precisos**
+- Aporte proteico total optimizado
+- Concentración de fortificador necesaria
+- Densidad energética calculada
+- Volumen de fortificador requerido
 
-### `npm test`
+### 💻 **Interfaz de Usuario Moderna**
+- Diseño responsive para desktop, tablet y móvil
+- Flujo de trabajo guiado paso a paso
+- Validación en tiempo real
+- Resultados visuales con barras de progreso
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Tecnologías Utilizadas
 
-### `npm run build`
+- **Frontend**: React 19.0.0
+- **Gestión de Estado**: Context API con hooks personalizados
+- **Estilos**: CSS Modules y CSS puro
+- **Build Tool**: Create React App
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Estructura del Proyecto
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+src/
+├── Components/
+│   ├── CalculadoraFortificacion.js    # Componente principal
+│   ├── EntradaDatos.js                # Panel de entrada de datos
+│   ├── ResultadosCalculados.js        # Panel de resultados
+│   ├── header.js                      # Header con navegación
+│   └── *.css                          # Estilos de componentes
+├── context/
+│   ├── LactaTechContext.js           # Contexto principal de la app
+│   └── ValoresNutricionalesContext.js # Contexto legacy (mantener por compatibilidad)
+├── helpers/
+│   └── cuentaAuxiliar.js             # Funciones de cálculo auxiliares
+└── App.js                            # Componente raíz
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Algoritmo de Fortificación
 
-### `npm run eject`
+### Parámetros de Entrada
+```javascript
+// Composiciones promedio de leche humana
+LECHE_PROMEDIO = {
+  term: { proteina: 1.04, lactosa: 7.19, lipidos: 2.96 },      // g/100ml
+  preterm: { proteina: 1.72, lactosa: 5.58, lipidos: 3.04 }   // g/100ml
+}
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+// Fortificador comercial estándar
+FORTIFICADOR_COMERCIAL = {
+  proteinaLiof: 46.2,  // g/100g liofilizado
+  lactosaLiof: 51.8,   // g/100g liofilizado  
+  lipidosLiof: 25.2    // g/100g liofilizado
+}
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+// Constantes físicas
+DENSIDAD_LIOFILIZADO = 1.4  // g/ml
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Fórmulas Principales
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. **Requerimiento diario de proteínas**:
+   ```
+   requerimiento = peso_kg × target_proteina_g_kg_dia
+   ```
 
-## Learn More
+2. **Aporte de leche sola**:
+   ```
+   aporte_leche = (concentracion_proteina × volumen_leche_diario) / 100
+   ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3. **Déficit a cubrir**:
+   ```
+   deficit = max(0, requerimiento - aporte_leche)
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+4. **Cantidad de fortificador**:
+   ```
+   gramos_liof = (deficit × 100) / concentracion_proteina_fortificador
+   volumen_fortificador = gramos_liof / densidad_liofilizado
+   ```
 
-### Code Splitting
+### Rangos Objetivo
+- **Proteínas**: 3.5-4.5 g/kg/día
+- **Lactosa**: 11-15 g/kg/día
+- **Lípidos**: 4.8-8.1 g/kg/día
+- **Energía**: 115-140 kcal/kg/día
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Instalación y Configuración
 
-### Analyzing the Bundle Size
+### Prerrequisitos
+- Node.js 16+ 
+- npm o yarn
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Pasos de Instalación
 
-### Making a Progressive Web App
+1. **Clonar el repositorio**:
+   ```bash
+   git clone <url-del-repositorio>
+   cd chechomatic
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+2. **Instalar dependencias**:
+   ```bash
+   npm install
+   ```
 
-### Advanced Configuration
+3. **Iniciar servidor de desarrollo**:
+   ```bash
+   npm start
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+4. **Abrir en navegador**:
+   ```
+   http://localhost:3000
+   ```
 
-### Deployment
+### Scripts Disponibles
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- `npm start` - Inicia el servidor de desarrollo
+- `npm run build` - Construye la aplicación para producción
+- `npm test` - Ejecuta las pruebas
+- `npm run eject` - Expone la configuración de webpack (irreversible)
 
-### `npm run build` fails to minify
+## Uso de la Aplicación
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Paso 1: Configurar Entrada de Datos
+
+1. **Leche Fluida**:
+   - Seleccionar método manual o estimado
+   - Ingresar valores según opción elegida
+
+2. **Fortificador**:
+   - Seleccionar fortificador comercial estándar
+   - Opción de personalizar composición
+
+3. **Parámetros del Paciente**:
+   - Peso del bebé (kg)
+   - Target de proteína (3.5-4.5 g/kg/día)
+   - Volumen de leche (ml/kg/día)
+
+### Paso 2: Calcular y Revisar Resultados
+
+1. Presionar "Calcular Fortificación"
+2. Revisar resultados calculados:
+   - Aporte proteico total
+   - Concentración de fortificador
+   - Densidad energética
+   - Optimización alcanzada
+
+### Paso 3: Interpretar Resultados
+
+- **Verde (Óptimo)**: 80-110% de optimización
+- **Amarillo (Revisar)**: Fuera del rango óptimo
+- **Información detallada**: Volumen específico de fortificador necesario
+
+## Consideraciones Clínicas
+
+### Validaciones Implementadas
+- Rangos seguros de concentración de fortificador
+- Límites fisiológicos de densidad energética
+- Alertas para concentraciones excesivas (>5% del volumen)
+
+### Limitaciones
+- Los cálculos son estimaciones basadas en valores promedio
+- Siempre debe ser supervisado por personal médico cualificado
+- No reemplaza la evaluación clínica individual
+
+## Contribución al Proyecto
+
+### Estructura de Commits
+```
+feat: nueva funcionalidad
+fix: corrección de errores
+docs: actualización de documentación
+style: cambios de formato
+refactor: refactorización de código
+test: adición de pruebas
+```
+
+### Desarrollo Local
+
+1. **Crear rama de feature**:
+   ```bash
+   git checkout -b feature/nueva-funcionalidad
+   ```
+
+2. **Realizar cambios y commit**:
+   ```bash
+   git add .
+   git commit -m "feat: descripción del cambio"
+   ```
+
+3. **Push y crear PR**:
+   ```bash
+   git push origin feature/nueva-funcionalidad
+   ```
+
+## Licencia
+
+Este proyecto está desarrollado para uso en contextos médicos y educativos. Consultar con el equipo de desarrollo para términos de uso específicos.
+
+## Contacto y Soporte
+
+Para consultas técnicas o clínicas sobre el algoritmo de fortificación, contactar al equipo de desarrollo.
+
+---
+
+**Versión**: 1.2.0  
+**Última actualización**: Enero 2025  
+**Compatibilidad**: React 19+, Navegadores modernos

@@ -1,0 +1,190 @@
+/* EntradaDatos.module.css */
+
+.entradaDatos {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.inputSection {
+  background-color: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.inputTitle {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #4a5568;
+}
+
+.inputSubtitle {
+  margin: 0 0 15px 0;
+  font-size: 13px;
+  color: #718096;
+}
+
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.radioOption {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: #4a5568;
+}
+
+.radioOption input[type="radio"] {
+  margin-right: 10px;
+  width: 16px;
+  height: 16px;
+  accent-color: #3182ce;
+}
+
+.radioLabel {
+  user-select: none;
+}
+
+.camposDinamicos {
+  background-color: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 15px;
+  margin-top: 10px;
+}
+
+.inputRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.inputRow:last-child {
+  margin-bottom: 0;
+}
+
+.inputRow label {
+  min-width: 80px;
+  color: #718096;
+  font-weight: 500;
+}
+
+.inputRow input {
+  flex: 1;
+  max-width: 100px;
+  padding: 6px 10px;
+  border: 1px solid #cbd5e0;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #4a5568;
+}
+
+.inputRow input:focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 1px #3182ce;
+}
+
+.inputRow select {
+  flex: 1;
+  max-width: 150px;
+  padding: 6px 10px;
+  border: 1px solid #cbd5e0;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #4a5568;
+  background-color: white;
+}
+
+.inputRow span {
+  color: #718096;
+  font-size: 12px;
+  min-width: 60px;
+}
+
+.inputRow small {
+  color: #a0aec0;
+  font-size: 11px;
+  margin-left: 5px;
+}
+
+.fortificadorSelector {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.fortificadorDropdown {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #cbd5e0;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #4a5568;
+  background-color: white;
+}
+
+.fortificadorDropdown:focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 1px #3182ce;
+}
+
+.btnPersonalizar {
+  padding: 8px 15px;
+  background-color: #ebf8ff;
+  color: #2b6cb0;
+  border: 1px solid #4299e1;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btnPersonalizar:hover {
+  background-color: #bee3f8;
+}
+
+/* Estados de validación */
+.inputRow input.error {
+  border-color: #e53e3e;
+  box-shadow: 0 0 0 1px #e53e3e;
+}
+
+.inputRow input.success {
+  border-color: #38a169;
+  box-shadow: 0 0 0 1px #38a169;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .inputRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .inputRow label {
+    min-width: auto;
+  }
+  
+  .inputRow input,
+  .inputRow select {
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  .fortificadorSelector {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
