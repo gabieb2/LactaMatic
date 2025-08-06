@@ -149,7 +149,7 @@ function ResultadosCalculados() {
         <div className={styles.sinResultados}>
           <div className={styles.placeholderContent}>
             <h4>Esperando cálculo...</h4>
-            <p>Complete los datos de entrada y presione "Calcular" para ver los resultados</p>
+             <p>{`Complete los datos de entrada y presione "Calcular" para ver los resultados`}</p>
           </div>
         </div>
       )}
