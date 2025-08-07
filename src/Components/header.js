@@ -11,7 +11,7 @@ function Header() {
     <header className={styles.header}>
       <div className={styles.logoContainer}>
         <div className={styles.logoCircle}>
-          <Image src="/path/to/image.png" alt="Descripción" width={ancho} height={alto} />
+          <Image src="/assets/logobebe.png" alt="Descripción" width={ancho} height={alto} />
         </div>
         <div className={styles.titleContainer}>
           <h1 className={styles.headertitle}>Chechomatic</h1>
