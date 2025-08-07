@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import Header from '../components/header'
-import CalculadoraFortificacion from '../components/CalculadoraFortificacion'
+import Header from '../Components/header.js'
+import CalculadoraFortificacion from '../Components/CalculadoraFortificacion.js'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
