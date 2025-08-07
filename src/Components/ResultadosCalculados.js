@@ -24,6 +24,7 @@ function ResultadosCalculados() {
       }
       case 'lipidos': {
         // Escala basada en peso típico de prematuros (1-3 kg) y target 4.8 y 8.1
+        if (!resultados.detalles || !resultados.detalles.pesoKg) return 0;
         const maxLipidos = resultados.detalles.pesoKg * 8.1; // 
         return Math.min(100, (valor / maxLipidos) * 100);
       }
@@ -44,47 +45,58 @@ function ResultadosCalculados() {
   };
 
   // Función para obtener el porcentaje del objetivo alcanzado
-  const obtenerPorcentajeObjetivo = (tipo, resultados) => {
-  if (!resultados.detalles) return '';
-  
+const obtenerPorcentajeObjetivo = (tipo, resultados) => {
+  if (!resultados || !resultados.detalles) return '';
+
   switch (tipo) {
-    case 'proteina':
-      const valorProteico = resultados.aporteProteicoTotal;
-      const porcentajeProteina = valorProteico > 0 ? 
-        (valorProteico / resultados.detalles.pesoKg) * 100 : 0;
-      if (porcentajeProteina >= 4.5 && porcentajeProteina <= 3.5) return '(Dentro del rango)';
+    case 'proteina': {
+      const valorProteico = resultados.aporteProteicoTotal ?? 0;
+      const pesoKg = resultados.detalles.pesoKg ?? 1;
+      const porcentajeProteina = valorProteico > 0 && pesoKg > 0
+        ? (valorProteico / pesoKg)
+        : 0;
+      if (porcentajeProteina >= 3.5 && porcentajeProteina <= 4.5) return '(Dentro del rango)';
       if (porcentajeProteina < 3.5) return '(Por debajo del mínimo)';
       return '(Por encima del máximo)';
-    
-    case 'concentracion':
-      const valorConcentracion = resultados.gramosLiofNecesarios;
+    }
+
+    /*case 'concentracion': {
+      const valorConcentracion = resultados.gramosLiofNecesarios ?? 0;
       if (valorConcentracion > 5) return '(⚠ Por encima del límite)';
       if (valorConcentracion > 4) return '(Alto)';
       if (valorConcentracion > 2) return '(Óptimo)';
       return '(Bajo)';
-    
-    case 'energia':
-      const valorEnergia = resultados.densidadEnergetica;
+    } */
+
+    case 'energia': {
+      const valorEnergia = resultados.densidadEnergetica ?? 0;
       if (valorEnergia >= 115 && valorEnergia <= 140) return '(Dentro del rango)';
       if (valorEnergia < 115) return '(Por debajo del mínimo)';
       return '(Por encima del máximo)';
+    }
 
-    case 'lipidos':
-      const valorLipidos = resultados.aporteLipidicoTotal;
-      const porcentajeLipidos = resultados.aporteLipidicoTotal > 0 ? 
-        (valorLipidos / resultados.detalles.pesoKg) : 0;
+    case 'lipidos': {
+      const valorLipidos = resultados.aporteLipidicoTotal ?? 0;
+      const pesoKg = resultados.detalles.pesoKg ?? 1;
+      const porcentajeLipidos = valorLipidos > 0 && pesoKg > 0
+        ? (valorLipidos / pesoKg)
+        : 0;
       if (porcentajeLipidos >= 4.8 && porcentajeLipidos <= 8.1) return '(Dentro del rango)';
       if (porcentajeLipidos < 4.8) return '(Por debajo del mínimo)';
       return '(Por encima del máximo)';
+    }
 
-    case 'carbohidratos':
-      const valorCarbohidratos = resultados.aporteCarbohidratosTotal;
-      const porcentajeCarbohidratos = resultados.aporteCarbohidratosTotal > 0 ? 
-        (valorCarbohidratos / resultados.detalles.pesoKg) : 0;
+    case 'carbohidratos': {
+      const valorCarbohidratos = resultados.aporteCarbohidratosTotal ?? 0;
+      const pesoKg = resultados.detalles.pesoKg ?? 1;
+      const porcentajeCarbohidratos = valorCarbohidratos > 0 && pesoKg > 0
+        ? (valorCarbohidratos / pesoKg)
+        : 0;
       if (porcentajeCarbohidratos >= 11 && porcentajeCarbohidratos <= 15) return '(Dentro del rango)';
       if (porcentajeCarbohidratos < 11) return '(Por debajo del mínimo)';
       return '(Por encima del máximo)';
-    
+    }
+
     default:
       return '';
   }
@@ -171,7 +183,7 @@ function ResultadosCalculados() {
                 className={styles.progressFill} 
                 style={{ 
                   width: `${calcularPorcentajeBarra(resultados.densidadEnergetica, 'energia')}%`,
-                  backgroundColor: (resultados.densidadEnergetica >= 115 && resultados.densidadEnergetica <= 140) ? '#38a169' : '#4299e1'
+                  backgroundColor: (resultados.densidadEnergetica >= 115 && resultados.densidadEnergetica <= 140) ? '#38a169' : '#e24821ff'
                 }}
               ></div>
             </div>
