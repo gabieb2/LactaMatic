@@ -199,6 +199,29 @@
   margin-top: auto;
 }
 
+.circuloValor {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #e6fffa;
+  color: #2c7a7b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 10px auto;
+  border: 3px solid #319795;
+  flex-direction: column;
+}
+
+.unidad {
+  font-size: 0.8rem;
+  font-weight: normal;
+  color: #4a5568;
+}
+
+
 .progressTotal {
   height: 10px;
   background-color: #edf2f7;

@@ -13,10 +13,10 @@ const DEFAULT_VALUES = {
 
   // Fortificador comercial estándar
   FORTIFICADOR_COMERCIAL: {
-    nombre: 'Comercial Fort.',
-    proteinaLiof: 46.2,  // g/100g liofilizado
-    lactosaLiof: 51.8,   // g/100g liofilizado  
-    lipidosLiof: 25.2    // g/100g liofilizado
+    nombre: 'Fortificador Comercial Nutriprem.',
+    proteinaLiof: 33,  // g/100g liofilizado
+    lactosaLiof: 37,   // g/100g liofilizado  
+    lipidosLiof: 18    // g/100g liofilizado
   },
 
   // Rangos objetivo nutricionales
@@ -64,11 +64,15 @@ export const LactaTechProvider = ({ children }) => {
     // Resultados calculados
     resultados: {
       aporteProteicoTotal: 0,
-      concentracionFortificador: 0,
+      aporteCarbohidratosTotal: 0,
+      aporteLipidicoTotal: 0,
+      gramosLiofNecesarios: 0,
       densidadEnergetica: 0,
       volumenFortificador: 0,
       optimizacionAlcanzada: 0,
-      esOptimo: false
+      esOptimo: false,
+      pesoKg: 0,
+      
     },
 
     // Estados de UI
@@ -131,6 +135,15 @@ export const LactaTechProvider = ({ children }) => {
         throw new Error('Peso y volumen de leche deben ser mayores a 0');
       }
 
+      // Validar límites máximos
+      if (volumenLecheDiario > 3000) {
+        throw new Error('El volumen de leche no puede ser mayor a 3 litros');
+      }
+
+      if (pesoKg > 20) {
+        throw new Error('El peso no puede ser mayor a 20 kg');
+      }
+
       const requerimientoProteinas = pesoKg * targetProteina; // g/día
 
       // 3. Calcular aporte de leche sola
@@ -164,25 +177,27 @@ export const LactaTechProvider = ({ children }) => {
 
       // 8. Calcular métricas finales
       // CORREGIDO: Cálculo de concentración en g/100ml de leche
-      const concentracionFortificador = volumenLecheDiario > 0 ?
-        (gramosLiofNecesarios * 100) / volumenLecheDiario : 0; // g/100ml de leche
+      
       const densidadEnergetica = calcularEnergia(aporteTotal, pesoKg);
       const optimizacionAlcanzada = requerimientoProteinas > 0 ?
         Math.min(100, (aporteTotal.proteinas / requerimientoProteinas) * 100) : 0;
 
       // 9. Verificar rangos de seguridad
-      const esSeguro = verificarSeguridadFortificacion(concentracionFortificador, densidadEnergetica, pesoKg);
+      const esSeguro = verificarSeguridadFortificacion(densidadEnergetica, pesoKg);
 
       // Actualizar resultados
       updateState('resultados', {
         aporteProteicoTotal: Math.round(aporteTotal.proteinas * 100) / 100,
-        concentracionFortificador: Math.round(concentracionFortificador * 100) / 100,
+        aporteCarbohidratosTotal: Math.round(aporteTotal.lactosa * 100) / 100,
+        aporteLipidicoTotal: Math.round(aporteTotal.lipidos * 100) / 100,
+        gramosLiofNecesarios: Math.round(gramosLiofNecesarios * 100) / 100,
         densidadEnergetica: Math.round(densidadEnergetica),
         volumenFortificador: Math.round(volumenFortificador * 100) / 100,
         optimizacionAlcanzada: Math.round(optimizacionAlcanzada),
         esOptimo: optimizacionAlcanzada >= 80 && optimizacionAlcanzada <= 110 && esSeguro,
         // Datos adicionales para debug
         detalles: {
+          pesoKg,
           requerimientoProteinas: Math.round(requerimientoProteinas * 100) / 100,
           aporteLeche: Math.round(aporteLeche.proteinas * 100) / 100,
           aporteFortificador: Math.round(aporteFortificador.proteinas * 100) / 100,
@@ -245,14 +260,14 @@ export const LactaTechProvider = ({ children }) => {
   const verificarSeguridadFortificacion = (concentracionFort, densidadEnergetica, peso) => {
     // Límites de seguridad
     const limites = {
-      concentracionMaxima: 5.0,     // % máximo de fortificador en volumen
+      //concentracionMaxima: 5.0,     // % máximo de fortificador en volumen
       densidadEnergeticaMin: 100,   // kcal/kg/día mínimo
       densidadEnergeticaMax: 150,   // kcal/kg/día máximo
       pesoMinimo: 0.5               // kg mínimo
     };
 
     return (
-      concentracionFort <= limites.concentracionMaxima &&
+      //concentracionFort <= limites.concentracionMaxima &&
       densidadEnergetica >= limites.densidadEnergeticaMin &&
       densidadEnergetica <= limites.densidadEnergeticaMax &&
       peso >= limites.pesoMinimo
@@ -268,10 +283,13 @@ export const LactaTechProvider = ({ children }) => {
       paciente: { peso: '', targetProteina: 4.0, volumenLeche: 150 },
       resultados: {
         aporteProteicoTotal: 0,
-        concentracionFortificador: 0,
+        aporteCarbohidratosTotal: 0,
+        aporteLipidicoTotal: 0,
+        gramosLiofNecesarios: 0,
         densidadEnergetica: 0,
         volumenFortificador: 0,
         optimizacionAlcanzada: 0,
+        pesoKg: 0,
         esOptimo: false
       },
       ui: { calculando: false, mostrarResultados: false, errores: {} }

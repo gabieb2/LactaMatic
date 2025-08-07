@@ -17,50 +17,85 @@ function ResultadosCalculados() {
   // Función para calcular porcentajes de barras de progreso dinámicamente
   const calcularPorcentajeBarra = (valor, tipo) => {
     switch (tipo) {
-      case 'proteina':
+      case 'proteina': {
         // Escala basada en peso típico de prematuros (1-3 kg) y target 3.5-4.5
-        const maxProteina = 3 * 4.5; // 13.5g para bebé de 3kg con target alto
+        const maxProteina = resultados.detalles.pesoKg * 4.5; // 13.5g para bebé de 3kg con target alto
         return Math.min(100, (valor / maxProteina) * 100);
+      }
+      case 'lipidos': {
+        // Escala basada en peso típico de prematuros (1-3 kg) y target 4.8 y 8.1
+        const maxLipidos = resultados.detalles.pesoKg * 8.1; // 
+        return Math.min(100, (valor / maxLipidos) * 100);
+      }
+      case 'carbohidratos': {
+        // Escala basada en peso típico de prematuros (1-3 kg) y target 11 y 15
+        const maxCarbohidratos = resultados.detalles.pesoKg * 15; //
+        return Math.min(100, (valor / maxCarbohidratos) * 100);
+      }
       
-      case 'concentracion':
-        // Escala hasta 6 g/100ml (por encima del límite de seguridad de 5)
-        return Math.min(100, (valor / 6) * 100);
-      
-      case 'energia':
+      case 'energia': {
         // Escala basada en rango objetivo 115-140 kcal/kg/día
         const maxEnergia = 150; // Un poco por encima del máximo recomendado
         return Math.min(100, (valor / maxEnergia) * 100);
-      
+      }
       default:
         return 0;
     }
   };
 
   // Función para obtener el porcentaje del objetivo alcanzado
-  const obtenerPorcentajeObjetivo = (valor, tipo) => {
-    if (!resultados.detalles) return '';
+  const obtenerPorcentajeObjetivo = (tipo, resultados) => {
+  if (!resultados.detalles) return '';
+  
+  switch (tipo) {
+    case 'proteina':
+      const valorProteico = resultados.aporteProteicoTotal;
+      const porcentajeProteina = valorProteico > 0 ? 
+        (valorProteico / resultados.detalles.pesoKg) * 100 : 0;
+      if (porcentajeProteina >= 4.5 && porcentajeProteina <= 3.5) return '(Dentro del rango)';
+      if (porcentajeProteina < 3.5) return '(Por debajo del mínimo)';
+      return '(Por encima del máximo)';
     
-    switch (tipo) {
-      case 'proteina':
-        const porcentajeProteina = resultados.detalles.requerimientoProteinas > 0 ? 
-          (valor / resultados.detalles.requerimientoProteinas) * 100 : 0;
-        return `(${Math.round(porcentajeProteina)}% objetivo)`;
-      
-      case 'concentracion':
-        if (valor > 5) return '(⚠ Por encima del límite)';
-        if (valor > 4) return '(Alto)';
-        if (valor > 2) return '(Óptimo)';
-        return '(Bajo)';
-      
-      case 'energia':
-        if (valor >= 115 && valor <= 140) return '(Dentro del rango)';
-        if (valor < 115) return '(Por debajo del mínimo)';
-        return '(Por encima del máximo)';
-      
-      default:
-        return '';
-    }
-  };
+    case 'concentracion':
+      const valorConcentracion = resultados.gramosLiofNecesarios;
+      if (valorConcentracion > 5) return '(⚠ Por encima del límite)';
+      if (valorConcentracion > 4) return '(Alto)';
+      if (valorConcentracion > 2) return '(Óptimo)';
+      return '(Bajo)';
+    
+    case 'energia':
+      const valorEnergia = resultados.densidadEnergetica;
+      if (valorEnergia >= 115 && valorEnergia <= 140) return '(Dentro del rango)';
+      if (valorEnergia < 115) return '(Por debajo del mínimo)';
+      return '(Por encima del máximo)';
+
+    case 'lipidos':
+      const valorLipidos = resultados.aporteLipidicoTotal;
+      const porcentajeLipidos = resultados.aporteLipidicoTotal > 0 ? 
+        (valorLipidos / resultados.detalles.pesoKg) : 0;
+      if (porcentajeLipidos >= 4.8 && porcentajeLipidos <= 8.1) return '(Dentro del rango)';
+      if (porcentajeLipidos < 4.8) return '(Por debajo del mínimo)';
+      return '(Por encima del máximo)';
+
+    case 'carbohidratos':
+      const valorCarbohidratos = resultados.aporteCarbohidratosTotal;
+      const porcentajeCarbohidratos = resultados.aporteCarbohidratosTotal > 0 ? 
+        (valorCarbohidratos / resultados.detalles.pesoKg) : 0;
+      if (porcentajeCarbohidratos >= 11 && porcentajeCarbohidratos <= 15) return '(Dentro del rango)';
+      if (porcentajeCarbohidratos < 11) return '(Por debajo del mínimo)';
+      return '(Por encima del máximo)';
+    
+    default:
+      return '';
+  }
+}
+
+// Ejemplos de uso:
+// obtenerPorcentajeObjetivo('proteina', resultados)
+// obtenerPorcentajeObjetivo('energia', resultados) 
+// obtenerPorcentajeObjetivo('lipidos', resultados)
+// obtenerPorcentajeObjetivo('carbohidratos', resultados)
+// obtenerPorcentajeObjetivo('concentracion', resultados)
 
   return (
     <div className={styles.resultadosCalculados}>
@@ -72,34 +107,65 @@ function ResultadosCalculados() {
             <div className={styles.progressBar}>
               <div 
                 className={styles.progressFill} 
-                style={{ width: `${calcularPorcentajeBarra(resultados.aporteProteicoTotal, 'proteina')}%` }}
+                style={{ width: `${calcularPorcentajeBarra(resultados.aporteProteicoTotal, 'proteina')}%`,
+                  backgroundColor: ((resultados.aporteProteicoTotal / resultados.detalles.pesoKg) <= 4.5 && (resultados.aporteProteicoTotal / resultados.detalles.pesoKg) >= 3.5) ? '#38a169' : '#dc3232ff'
+                 }}
               ></div>
             </div>
             <p className={styles.resultadoValue}>
-              {resultados.aporteProteicoTotal} g/día {obtenerPorcentajeObjetivo(resultados.aporteProteicoTotal, 'proteina')}
+              {resultados.aporteProteicoTotal} g/día {obtenerPorcentajeObjetivo('proteina', resultados)}
             </p>
           </div>
 
           {/* Resultado 2 */}
           <div className={styles.resultadoItem}>
-            <h4 className={styles.resultadoLabel}>2.2 Concentración Fortificador</h4>
+            <h4 className={styles.resultadoLabel}>2.2 Aporte Lipidico Total</h4>
             <div className={styles.progressBar}>
               <div 
                 className={styles.progressFill} 
-                style={{ 
-                  width: `${calcularPorcentajeBarra(resultados.concentracionFortificador, 'concentracion')}%`,
-                  backgroundColor: resultados.concentracionFortificador > 5 ? '#e53e3e' : '#4299e1'
+                style={{ width: `${calcularPorcentajeBarra(resultados.aporteLipidicoTotal, 'lipidos')}%`,
+                  backgroundColor: ((resultados.aporteLipidicoTotal / resultados.detalles.pesoKg) >= 4.8 && (resultados.aporteLipidicoTotal / resultados.detalles.pesoKg) <= 8.1) ? '#38a169' : '#dc3232ff'
                 }}
               ></div>
             </div>
             <p className={styles.resultadoValue}>
-              {resultados.concentracionFortificador} g/100ml {obtenerPorcentajeObjetivo(resultados.concentracionFortificador, 'concentracion')}
+              {resultados.aporteLipidicoTotal} g/día {obtenerPorcentajeObjetivo('lipidos', resultados)}
             </p>
           </div>
 
           {/* Resultado 3 */}
           <div className={styles.resultadoItem}>
-            <h4 className={styles.resultadoLabel}>2.3 Densidad Energética</h4>
+            <h4 className={styles.resultadoLabel}>2.3 Aporte carbohidratos Total</h4>
+            <div className={styles.progressBar}>
+              <div 
+                className={styles.progressFill} 
+                style={{ 
+                  width: `${calcularPorcentajeBarra(resultados.aporteCarbohidratosTotal, 'carbohidratos')}%`,
+                  backgroundColor: ((resultados.aporteCarbohidratosTotal / resultados.detalles.pesoKg) >= 11 && (resultados.aporteCarbohidratosTotal / resultados.detalles.pesoKg) <= 15) ? '#38a169' : '#dc3232ff'
+                }}
+              ></div>
+            </div>
+            <p className={styles.resultadoValue}>
+              {resultados.aporteCarbohidratosTotal} g/día {obtenerPorcentajeObjetivo('carbohidratos', resultados)}
+            </p>
+          </div>
+
+          {/* Resultado 4 */}
+          <div className={styles.resultadoItem}>
+            <h4 className={styles.resultadoLabel}>2.4 Cantidad de Fortificador a Agregar (g)</h4>
+            <div className={styles.circuloValor}>
+              {resultados.gramosLiofNecesarios}
+              <span className={styles.unidad}>g/100ml</span>
+            </div>
+            <p className={styles.resultadoValue}>
+              {obtenerPorcentajeObjetivo('concentracion', resultados)}
+            </p>
+          </div>
+
+          {/* Resultado 5*/}
+
+          <div className={styles.resultadoItem}>
+            <h4 className={styles.resultadoLabel}>2.5 Densidad Energética</h4>
             <div className={styles.progressBar}>
               <div 
                 className={styles.progressFill} 
@@ -110,7 +176,7 @@ function ResultadosCalculados() {
               ></div>
             </div>
             <p className={styles.resultadoValue}>
-              {resultados.densidadEnergetica} kcal/kg/día {obtenerPorcentajeObjetivo(resultados.densidadEnergetica, 'energia')}
+              {resultados.densidadEnergetica} kcal/kg/día {obtenerPorcentajeObjetivo('energia', resultados)}
             </p>
           </div>
 
@@ -132,9 +198,9 @@ function ResultadosCalculados() {
                   <summary className={styles.detallesSummary}>Ver detalles del cálculo</summary>
                   <div className={styles.detallesContent}>
                     <p><strong>Requerimiento:</strong> {resultados.detalles.requerimientoProteinas} g/día</p>
-                    <p><strong>Aporte leche:</strong> {resultados.detalles.aporteLeche} g/día</p>
-                    <p><strong>Aporte fortificador:</strong> {resultados.detalles.aporteFortificador} g/día</p>
-                    <p><strong>Composición usada:</strong> P:{resultados.detalles.composicionUsada?.proteina} L:{resultados.detalles.composicionUsada?.lactosa} Li:{resultados.detalles.composicionUsada?.lipidos}</p>
+                    <p><strong>Aporte proteico leche:</strong> {resultados.detalles.aporteLeche} g/día</p>
+                    <p><strong>Aporte proteico fortificador:</strong> {resultados.detalles.aporteFortificador} g/día</p>
+                    <p><strong>Composición usada:</strong> P:{resultados.detalles.composicionUsada?.proteina} Lac:{resultados.detalles.composicionUsada?.lactosa} Li:{resultados.detalles.composicionUsada?.lipidos}</p>
                   </div>
                 </details>
               )}

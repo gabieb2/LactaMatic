@@ -118,7 +118,7 @@ function EntradaDatos() {
       {/* Sección 2: Fortificador */}
       <div className={styles.inputSection}>
         <h3 className={styles.inputTitle}>1.2 Fortificador</h3>
-        <p className={styles.inputSubtitle}>46.2g Prot, 51.8g Lact, 25.2g Líp/100g</p>
+        <p className={styles.inputSubtitle}>33g Prot, 37g Lact, 18g Líp/100g</p>
         
         <div className={styles.fortificadorSelector}>
           <select className={styles.fortificadorDropdown}>
@@ -162,6 +162,9 @@ function EntradaDatos() {
           <label>Vol. leche:</label>
           <input
             type="number"
+            step="0.1"
+            min="5"
+            max="300"
             value={state.paciente.volumenLeche}
             onChange={(e) => handlePacienteChange('volumenLeche', e.target.value)}
           />
