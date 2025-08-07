@@ -121,9 +121,9 @@ const obtenerPorcentajeObjetivo = (tipo, resultados) => {
                 className={styles.progressFill} 
                 style={{ width: `${calcularPorcentajeBarra(resultados.aporteProteicoTotal, 'proteina')}%`,
                  backgroundColor:
-                    resultados.aporteProteicoTotal < 3.5
+                    (resultados.aporteProteicoTotal/resultados.pesoKg) < 3.5
                      ? '#f6ad55' // 🔶 Color para valores < 115
-                     : resultados.aporteProteicoTotal <= 4.5
+                     : (resultados.aporteProteicoTotal/resultados.pesoKg) <= 4.5
                      ? '#38a169' // ✅ Color para valores entre 115 y 140 (inclusive)
                      : '#e53e3e' // ❌ Color para valores > 140
                  }}
@@ -142,9 +142,9 @@ const obtenerPorcentajeObjetivo = (tipo, resultados) => {
                 className={styles.progressFill} 
                 style={{ width: `${calcularPorcentajeBarra(resultados.aporteLipidicoTotal, 'lipidos')}%`,
                   backgroundColor:
-                    resultados.aporteLipidicoTotal < 4.8
+                    (resultados.aporteLipidicoTotal/resultados.pesoKg) < 4.8
                      ? '#f6ad55' // 🔶 Color para valores < 115
-                     : resultados.aporteLipidicoTotal <= 8.1
+                     : (resultados.aporteLipidicoTotal/resultados.pesoKg) <= 8.1
                      ? '#38a169' // ✅ Color para valores entre 115 y 140 (inclusive)
                      : '#e53e3e' // ❌ Color para valores > 140
                 }}
@@ -164,9 +164,9 @@ const obtenerPorcentajeObjetivo = (tipo, resultados) => {
                 style={{ 
                   width: `${calcularPorcentajeBarra(resultados.aporteCarbohidratosTotal, 'carbohidratos')}%`,
                   backgroundColor:
-                    resultados.aporteCarbohidratosTotal < 11
+                    (resultados.aporteCarbohidratosTotal/resultados.pesoKg) < 11
                      ? '#f6ad55' // 🔶 Color para valores < 115
-                     : resultados.aporteCarbohidratosTotal <= 15
+                     : (resultados.aporteCarbohidratosTotal/resultados.pesoKg) <= 15
                      ? '#38a169' // ✅ Color para valores entre 115 y 140 (inclusive)
                      : '#e53e3e' // ❌ Color para valores > 140
                 }}
