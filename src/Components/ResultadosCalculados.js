@@ -164,10 +164,10 @@ const obtenerPorcentajeObjetivo = (tipo, resultados) => {
 
           {/* Resultado 4 */}
           <div className={styles.resultadoItem}>
-            <h4 className={styles.resultadoLabel}>2.4 Cantidad de Fortificador a Agregar (g)</h4>
+            <h4 className={styles.resultadoLabel}>2.4 Gramos de Fortificador a Agregar </h4>
             <div className={styles.circuloValor}>
               {resultados.gramosLiofNecesarios}
-              <span className={styles.unidad}>g/100ml</span>
+               {/*<span className={styles.unidad}></span>*/}
             </div>
             <p className={styles.resultadoValue}>
               {obtenerPorcentajeObjetivo('concentracion', resultados)}
