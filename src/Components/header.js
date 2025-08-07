@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './header.module.css';
 import Image from 'next/image'
+import Link from 'next/link';
 
 function Header() {
   // Define las variables que faltaban
@@ -20,9 +21,9 @@ function Header() {
       </div>
 
       <div className={styles.navigation}>
-        <div className={styles.navItem} disabled>Inicio</div>
-        <div className={`${styles.navItem} ${styles.navItemActive}`}>Calculadora</div>
-        <div className={styles.navItem} disabled>Ayuda</div>
+        <Link href="inicio" className={styles.navItem}>Inicio</Link>
+        <Link href="calculadora" className={`${styles.navItem} ${styles.navItemActive}`}>Calculadora</Link>
+        <Link href="/help" className={styles.navItem}>Ayuda</Link>
       </div>
     </header>
   );

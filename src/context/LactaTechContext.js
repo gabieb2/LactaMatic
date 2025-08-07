@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 
 // Creamos el contexto principal de Chechomatic
-const LactaTechContext = createContext();
+export const LactaTechContext = createContext();
 
 // Valores por defecto basados en nuestro análisis del Excel
 const DEFAULT_VALUES = {
