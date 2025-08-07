@@ -120,7 +120,12 @@ const obtenerPorcentajeObjetivo = (tipo, resultados) => {
               <div 
                 className={styles.progressFill} 
                 style={{ width: `${calcularPorcentajeBarra(resultados.aporteProteicoTotal, 'proteina')}%`,
-                  backgroundColor: ((resultados.aporteProteicoTotal / resultados.detalles.pesoKg) <= 4.5 && (resultados.aporteProteicoTotal / resultados.detalles.pesoKg) >= 3.5) ? '#38a169' : '#dc3232ff'
+                 backgroundColor:
+                    resultados.aporteProteicoTotal < 3.5
+                     ? '#f6ad55' // 🔶 Color para valores < 115
+                     : resultados.aporteProteicoTotal <= 4.5
+                     ? '#38a169' // ✅ Color para valores entre 115 y 140 (inclusive)
+                     : '#e53e3e' // ❌ Color para valores > 140
                  }}
               ></div>
             </div>
@@ -136,7 +141,12 @@ const obtenerPorcentajeObjetivo = (tipo, resultados) => {
               <div 
                 className={styles.progressFill} 
                 style={{ width: `${calcularPorcentajeBarra(resultados.aporteLipidicoTotal, 'lipidos')}%`,
-                  backgroundColor: ((resultados.aporteLipidicoTotal / resultados.detalles.pesoKg) >= 4.8 && (resultados.aporteLipidicoTotal / resultados.detalles.pesoKg) <= 8.1) ? '#38a169' : '#dc3232ff'
+                  backgroundColor:
+                    resultados.aporteLipidicoTotal < 4.8
+                     ? '#f6ad55' // 🔶 Color para valores < 115
+                     : resultados.aporteLipidicoTotal <= 8.1
+                     ? '#38a169' // ✅ Color para valores entre 115 y 140 (inclusive)
+                     : '#e53e3e' // ❌ Color para valores > 140
                 }}
               ></div>
             </div>
@@ -153,7 +163,12 @@ const obtenerPorcentajeObjetivo = (tipo, resultados) => {
                 className={styles.progressFill} 
                 style={{ 
                   width: `${calcularPorcentajeBarra(resultados.aporteCarbohidratosTotal, 'carbohidratos')}%`,
-                  backgroundColor: ((resultados.aporteCarbohidratosTotal / resultados.detalles.pesoKg) >= 11 && (resultados.aporteCarbohidratosTotal / resultados.detalles.pesoKg) <= 15) ? '#38a169' : '#dc3232ff'
+                  backgroundColor:
+                    resultados.aporteCarbohidratosTotal < 11
+                     ? '#f6ad55' // 🔶 Color para valores < 115
+                     : resultados.aporteCarbohidratosTotal <= 15
+                     ? '#38a169' // ✅ Color para valores entre 115 y 140 (inclusive)
+                     : '#e53e3e' // ❌ Color para valores > 140
                 }}
               ></div>
             </div>
@@ -183,7 +198,12 @@ const obtenerPorcentajeObjetivo = (tipo, resultados) => {
                 className={styles.progressFill} 
                 style={{ 
                   width: `${calcularPorcentajeBarra(resultados.densidadEnergetica, 'energia')}%`,
-                  backgroundColor: (resultados.densidadEnergetica >= 115 && resultados.densidadEnergetica <= 140) ? '#38a169' : '#e24821ff'
+                  backgroundColor:
+                    resultados.densidadEnergetica < 115
+                     ? '#f6ad55' // 🔶 Color para valores < 115
+                     : resultados.densidadEnergetica <= 140
+                     ? '#38a169' // ✅ Color para valores entre 115 y 140 (inclusive)
+                     : '#e53e3e' // ❌ Color para valores > 140
                 }}
               ></div>
             </div>
