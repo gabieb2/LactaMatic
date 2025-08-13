@@ -1,4 +1,4 @@
-# 📊 Impacto de Parámetros en Chechomatic
+# 📊 Impacto de Parámetros en Lactamatic
 
 ## **Cómo Cada Parámetro Afecta el Resultado Final**
 

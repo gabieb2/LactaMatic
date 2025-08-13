@@ -1,8 +1,8 @@
-# Chechomatic  - Calculadora de Fortificación de Leche Humana
+# LactaMatic  - Calculadora de Fortificación de Leche Humana
 
 ## Descripción
 
-Chechomatic es una aplicación web inteligente diseñada para optimizar la fortificación de leche humana en contextos sanitarios, especialmente para la alimentación de bebés prematuros. La aplicación implementa algoritmos basados en evidencia clínica para calcular las concentraciones óptimas de fortificador según las necesidades nutricionales específicas de cada paciente.
+Lactamatic es una aplicación web inteligente diseñada para optimizar la fortificación de leche humana en contextos sanitarios, especialmente para la alimentación de bebés prematuros. La aplicación implementa algoritmos basados en evidencia clínica para calcular las concentraciones óptimas de fortificador según las necesidades nutricionales específicas de cada paciente.
 
 ## Características Principales
 
@@ -113,7 +113,7 @@ DENSIDAD_LIOFILIZADO = 1.4  // g/ml
 1. **Clonar el repositorio**:
    ```bash
    git clone <url-del-repositorio>
-   cd chechomatic
+   cd Lactamatic
    ```
 
 2. **Instalar dependencias**:
@@ -167,7 +167,9 @@ DENSIDAD_LIOFILIZADO = 1.4  // g/ml
 ### Paso 3: Interpretar Resultados
 
 - **Verde (Óptimo)**: 80-110% de optimización
-- **Amarillo (Revisar)**: Fuera del rango óptimo
+- **Rojo (Revisar)**: Superior del rango óptimo
+- **Amarillo (Revisar)**: Inferior al rango óptimo
+
 - **Información detallada**: Volumen específico de fortificador necesario
 
 ## Consideraciones Clínicas

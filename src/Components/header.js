@@ -15,7 +15,7 @@ function Header() {
           <Image src="/assets/logobebe.png" alt="Descripción" width={ancho} height={alto} />
         </div>
         <div className={styles.titleContainer}>
-          <h1 className={styles.headertitle}>Chechomatic</h1>
+          <h1 className={styles.headertitle}>Lactamatic</h1>
           <p className={styles.headersubtitle}>Optimización de Fortificación de Leche Humana</p>
         </div>
       </div>
