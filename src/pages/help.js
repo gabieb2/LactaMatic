@@ -2,7 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import Header from '../Components/header'; // corregí a minúscula si tu carpeta es 'components'
 import styles from '../styles/Home.module.css';
-import CenterContainer from '../Components/centercontainer';
+import HelpContainer from '../Components/helpContainer';
 
 
 function Ayuda() {
@@ -19,7 +19,7 @@ function Ayuda() {
 
       {/* Contenedor centrado para la ayuda */}
       <main className={styles.pageContainer}>
-        <CenterContainer />
+        <HelpContainer />
       </main>
     </div>
   );

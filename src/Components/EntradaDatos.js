@@ -113,7 +113,7 @@ function EntradaDatos() {
 
         <div className={styles.fortificadorSelector}>
           <select className={styles.fortificadorDropdown}>
-            <option value="Nutriprem">NutriPrem (BAGO) 33P,37La,18L g/100g</option>
+            <option value="Nutriprem">NutriPrem (BAGO) 33P-37La-18L (g/100g)</option>
             <option value="personalizado">Personalizado</option>
           </select>
         </div>

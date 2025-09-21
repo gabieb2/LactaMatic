@@ -15,35 +15,34 @@ function ResultadosCalculados() {
   };
 
   // Función para calcular porcentajes de barras de progreso dinámicamente
-const calcularPorcentajeBarra = (valorTotal, tipo) => {
-  if (!resultados.detalles || !resultados.detalles.pesoKg) return 0;
-  
-  // 1. Usar el valor por unidad de peso (excepto para Energía)
-  const valor = (tipo === 'energia') 
-    ? valorTotal 
-    : valorTotal / resultados.detalles.pesoKg; 
-
-  // 2. Definir límites de visualización (más amplios que los recomendados)
-  const limitesVisuales = {
-    proteina: { min: 2.5, max: 5.5 }, // Rango recomendado 3.5-4.5
-    lipidos: { min: 3.0, max: 10.0 }, // Rango recomendado 4.8-8.1
-    carbohidratos: { min: 9.0, max: 17.0 }, // Rango recomendado 11-15
-    energia: { min: 95, max: 165 }, // Rango recomendado 115-140
+  const calcularPorcentajeBarra = (valor, tipo) => {
+    switch (tipo) {
+      case 'proteina': {
+        // Escala basada en peso típico de prematuros (1-3 kg) y target 3.5-4.5
+        const maxProteina = resultados.detalles.pesoKg * 4.5; // 13.5g para bebé de 3kg con target alto
+        return Math.min(100, (valor / maxProteina) * 100);
+      }
+      case 'lipidos': {
+        // Escala basada en peso típico de prematuros (1-3 kg) y target 4.8 y 8.1
+        if (!resultados.detalles || !resultados.detalles.pesoKg) return 0;
+        const maxLipidos = resultados.detalles.pesoKg * 8.1; // 
+        return Math.min(100, (valor / maxLipidos) * 100);
+      }
+      case 'carbohidratos': {
+        // Escala basada en peso típico de prematuros (1-3 kg) y target 11 y 15
+        const maxCarbohidratos = resultados.detalles.pesoKg * 15; //
+        return Math.min(100, (valor / maxCarbohidratos) * 100);
+      }
+      
+      case 'energia': {
+        // Escala basada en rango objetivo 115-140 kcal/kg/día
+        const maxEnergia = 150; // Un poco por encima del máximo recomendado
+        return Math.min(100, (valor / maxEnergia) * 100);
+      }
+      default:
+        return 0;
+    }
   };
-
-  const limites = limitesVisuales[tipo];
-
-  if (!limites) return 0;
-  
-  // 3. Aplicar la fórmula de mapeo de rango
-  // Porcentaje = (Valor - Min_Visual) / (Max_Visual - Min_Visual) * 100
-  let porcentaje = ((valor - limites.min) / (limites.max - limites.min)) * 100;
-  
-  // 4. Limitar el resultado entre 0% y 100%
-  porcentaje = Math.max(0, Math.min(100, porcentaje));
-
-  return porcentaje.toFixed(1);
-};
 
   // Función para obtener el porcentaje del objetivo alcanzado
 const obtenerPorcentajeObjetivo = (tipo, resultados) => {
@@ -103,12 +102,7 @@ const obtenerPorcentajeObjetivo = (tipo, resultados) => {
   }
 }
 
-// Ejemplos de uso:
-// obtenerPorcentajeObjetivo('proteina', resultados)
-// obtenerPorcentajeObjetivo('energia', resultados) 
-// obtenerPorcentajeObjetivo('lipidos', resultados)
-// obtenerPorcentajeObjetivo('carbohidratos', resultados)
-// obtenerPorcentajeObjetivo('concentracion', resultados)
+
 
   return (
     <div className={styles.resultadosCalculados}>
@@ -119,8 +113,8 @@ const obtenerPorcentajeObjetivo = (tipo, resultados) => {
             <h4 className={styles.resultadoLabel}>Aporte Proteico Total</h4>
             <div className={styles.progressBar}>
               <div 
-                 className={styles.progressFill} 
-                 style={{ width: `${calcularPorcentajeBarra(resultados.aporteProteicoTotal, 'proteina')}%`,
+                className={styles.progressFill} 
+                style={{ width: `${calcularPorcentajeBarra(resultados.aporteProteicoTotal, 'proteina')}%`,
                  backgroundColor:
                     (resultados.aporteProteicoTotal/resultados.detalles.pesoKg) < 3.5
                      ? '#f6ad55' // 🔶 Color para valores < 115
@@ -158,7 +152,7 @@ const obtenerPorcentajeObjetivo = (tipo, resultados) => {
 
           {/* Resultado 3 */}
           <div className={styles.resultadoItem}>
-            <h4 className={styles.resultadoLabel}>Aporte Carbohidratos Total</h4>
+            <h4 className={styles.resultadoLabel}>Aporte carbohidratos Total</h4>
             <div className={styles.progressBar}>
               <div 
                 className={styles.progressFill} 
@@ -180,7 +174,7 @@ const obtenerPorcentajeObjetivo = (tipo, resultados) => {
 
           {/* Resultado 4 */}
           <div className={styles.resultadoItem}>
-            <h4 className={styles.resultadoLabel}>2.4 Gramos de Fortificador a Agregar </h4>
+            <h4 className={styles.resultadoLabel}>Gramos de Fortificador a Agregar </h4>
             <div className={styles.circuloValor}>
               {resultados.gramosLiofNecesarios}
                {/*<span className={styles.unidad}></span>*/}
@@ -274,7 +268,7 @@ const obtenerPorcentajeObjetivo = (tipo, resultados) => {
               </>
             ) : (
               <>
-                <div className={styles.btnIcon}></div>
+                <div className={styles.btnIcon}>+</div>
                 CALCULAR FORTIFICACIÓN
               </>
             )}
@@ -284,7 +278,8 @@ const obtenerPorcentajeObjetivo = (tipo, resultados) => {
             <button 
               className={styles.btnReset}
               onClick={handleReset}
-            > Nuevo Cálculo
+            >
+              Nuevo Cálculo
             </button>
           )}
         </div>

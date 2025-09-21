@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './centercontainer.module.css';  // Si tienes un archivo CSS externo, o puedes aplicar estilos en línea
+import styles from './helpContainer.module.css';  // Si tienes un archivo CSS externo, o puedes aplicar estilos en línea
 
-function CenterContainer() {
+function helpContainer() {
   return (
     <div className={styles.centerContainer}>
       <div className={styles.ayudaContainer}>
@@ -82,4 +82,4 @@ function CenterContainer() {
 }
 
 
-export default CenterContainer;
+export default helpContainer;

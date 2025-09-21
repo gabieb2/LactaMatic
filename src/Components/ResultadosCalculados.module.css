@@ -242,10 +242,17 @@
   width: 100%;
 }
 
+/* ResultadosCalculados.module.css */
+
 .botonesAccion {
+  /* Asegura que no haya un ancho fijo que se desborde */
+  width: 100%; 
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  gap: 15px; /* Espacio entre el botón calcular y el botón reset */
+  /* Centrar los botones si es necesario */
+  justify-content: flex-end; 
+  align-items: center;
+  margin-top: 15px; /* Separación de la barra de progreso */
 }
 
 .btnCalcular {
@@ -263,6 +270,14 @@
   justify-content: center;
   gap: 10px;
   transition: all 0.2s;
+  flex-grow: 1; /* Permite que el botón crezca si es necesario (si no hay otros botones) */
+  flex-shrink: 1; /* Permite que el botón se encoja si es necesario */
+  width: auto; /* Ocupa el espacio necesario, no fuerza un ancho */
+  
+  /* Asegura que el texto largo se pueda manejar */
+  white-space: normal; /* Permite que el texto salte de línea */
+  text-align: center;
+  padding: 10px 15px; /* Padding moderado */
 }
 
 .btnCalcular:hover:not(:disabled) {
@@ -293,6 +308,7 @@
   border-top: 2px solid white;
   border-radius: 50%;
   animation: spin 1s linear infinite;
+  margin-right: 8px; /* Espacio con el texto 'Calculando...' */
 }
 
 @keyframes spin {
