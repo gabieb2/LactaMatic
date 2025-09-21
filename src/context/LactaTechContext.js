@@ -105,136 +105,118 @@ export const LactaTechProvider = ({ children }) => {
   };
 
   // Función para calcular la fortificación
-  const calcularFortificacion = () => {
-    updateState('ui.calculando', true);
-      const pesoKg = parseFloat(state.paciente.peso) || 0;
-      const targetProteina = parseFloat(state.paciente.targetProteina) || 4.0;
-      const volumenLecheDiario = (parseFloat(state.paciente.volumenLeche) || 150) * pesoKg;
+ // Función para calcular la fortificación
+  const calcularFortificacion = () => {
+    updateState('ui.calculando', true);
+    const pesoKg = parseFloat(state.paciente.peso) || 0;
+    const targetProteina = parseFloat(state.paciente.targetProteina) || 4.0;
+    const volumenLecheDiario = (parseFloat(state.paciente.volumenLeche) || 150) * pesoKg;
 
-      try {
-      // 1. Determinar composición de leche base
-      let composicionLeche;
-      if (state.lecheMetodo === 'manual') {
-        composicionLeche = {
-          proteina: parseFloat(state.lecheManual.proteina) || 0,
-          lactosa: parseFloat(state.lecheManual.lactosa) || 0,
-          lipidos: parseFloat(state.lecheManual.lipidos) || 0
-        };
-      } else {
-        // Obtener composición base según tipo
-        const composicionBase = DEFAULT_VALUES.LECHE_PROMEDIO[state.lecheEstimado.tipoLeche];
+    try {
+      // VALIDACIONES INICIALES
+      if (pesoKg <= 0 || volumenLecheDiario <= 0) {
+        throw new Error('Peso y volumen de leche deben ser mayores a 0');
+      }
+      if (volumenLecheDiario > 3000) {
+        throw new Error('El volumen de leche no puede ser mayor a 3 litros');
+      }
+      if (pesoKg > 20) {
+        throw new Error('El peso no puede ser mayor a 20 kg');
+      }
 
-        // Ajustar por días de puerperio
-        const diasPuerperio = parseInt(state.lecheEstimado.diasPuerperio) || 15;
-        composicionLeche = ajustarPorDiasPuerperio(composicionBase, diasPuerperio);
-      }
+      // 1. Determinar composición de leche base
+      let composicionLeche;
+      if (state.lecheMetodo === 'manual') {
+        composicionLeche = {
+          proteina: parseFloat(state.lecheManual.proteina) || 0,
+          lactosa: parseFloat(state.lecheManual.lactosa) || 0,
+          lipidos: parseFloat(state.lecheManual.lipidos) || 0
+        };
+      } else {
+        const composicionBase = DEFAULT_VALUES.LECHE_PROMEDIO[state.lecheEstimado.tipoLeche];
+        const diasPuerperio = parseInt(state.lecheEstimado.diasPuerperio) || 15;
+        composicionLeche = ajustarPorDiasPuerperio(composicionBase, diasPuerperio);
+      }
 
-      // 1. Calcular cantidad de fortificador necesaria
-      let gramosLiofNecesarios;
-      if (state.fortificacionMetodo === 'proteinAdjusted') {
-        gramosLiofNecesarios = deficitProteinas > 0 ?
-          (deficitProteinas * 100) / state.fortificador.composicion.proteinaLiof : 0;
-        const volumenFortificador = gramosLiofNecesarios / DEFAULT_VALUES.DENSIDAD_LIOFILIZADO;
+      // 2. Calcular requerimientos y aporte de leche sola
+      const requerimientoProteinas = pesoKg * targetProteina; // g/día
 
-      } else {
-        gramosLiofNecesarios = Math.ceil(volumenLecheDiario / 25);
-
-      }
-
-      // 2. Calcular requerimientos diarios
-  
-
-      // Validar datos mínimos
-      if (pesoKg <= 0 || volumenLecheDiario <= 0) {
-        throw new Error('Peso y volumen de leche deben ser mayores a 0');
-      }
-
-      // Validar límites máximos
-      if (volumenLecheDiario > 3000) {
-        throw new Error('El volumen de leche no puede ser mayor a 3 litros');
-      }
-
-      if (pesoKg > 20) {
-        throw new Error('El peso no puede ser mayor a 20 kg');
-      }
-
-      const requerimientoProteinas = pesoKg * targetProteina; // g/día
-
-      // 3. Calcular aporte de leche sola
-      const aporteLeche = {
-        proteinas: (composicionLeche.proteina * volumenLecheDiario) / 100,
-        lactosa: (composicionLeche.lactosa * volumenLecheDiario) / 100,
-        lipidos: (composicionLeche.lipidos * volumenLecheDiario) / 100
-      };
-
-      // 4. Calcular déficit nutricional
-      const deficitProteinas = Math.max(0, requerimientoProteinas - aporteLeche.proteinas);
-
-      // 5. Calcular cantidad de fortificador necesaria
-      let volumenFortificador = 0;
-      if (state.fortificacionMetodo === 'proteinAdjusted') {
-        gramosLiofNecesarios = deficitProteinas > 0 ?
-          (deficitProteinas * 100) / state.fortificador.composicion.proteinaLiof : 0;
-        volumenFortificador = gramosLiofNecesarios / DEFAULT_VALUES.DENSIDAD_LIOFILIZADO;
-      } else {
-        gramosLiofNecesarios = Math.ceil(volumenLecheDiario / 25);
-        volumenFortificador = gramosLiofNecesarios / DEFAULT_VALUES.DENSIDAD_LIOFILIZADO;
-      }
-
-      // 6. Calcular aportes del fortificador
-      const aporteFortificador = {
-        proteinas: (gramosLiofNecesarios * state.fortificador.composicion.proteinaLiof) / 100,
-        lactosa: (gramosLiofNecesarios * state.fortificador.composicion.lactosaLiof) / 100,
-        lipidos: (gramosLiofNecesarios * state.fortificador.composicion.lipidosLiof) / 100
-      };
-
-      // 7. Calcular totales finales
-      const aporteTotal = {
-        proteinas: aporteLeche.proteinas + aporteFortificador.proteinas,
-        lactosa: aporteLeche.lactosa + aporteFortificador.lactosa,
-        lipidos: aporteLeche.lipidos + aporteFortificador.lipidos
-      };
-
-      // 8. Calcular métricas finales
-      // CORREGIDO: Cálculo de concentración en g/100ml de leche
+      const aporteLeche = {
+        proteinas: (composicionLeche.proteina * volumenLecheDiario) / 100,
+        lactosa: (composicionLeche.lactosa * volumenLecheDiario) / 100,
+        lipidos: (composicionLeche.lipidos * volumenLecheDiario) / 100
+      };
       
-      const densidadEnergetica = calcularEnergia(aporteTotal, pesoKg);
-      const optimizacionAlcanzada = requerimientoProteinas > 0 ?
-        Math.min(100, (aporteTotal.proteinas / requerimientoProteinas) * 100) : 0;
+      // 3. CALCULAR DÉFICIT NUTRICIONAL (MOVIDO AL PRINCIPIO)
+      const deficitProteinas = Math.max(0, requerimientoProteinas - aporteLeche.proteinas);
 
-      // 9. Verificar rangos de seguridad
-      const esSeguro = verificarSeguridadFortificacion(densidadEnergetica, pesoKg);
+      // 4. Calcular gramos de fortificador necesarios (LÓGICA UNIFICADA)
+      let gramosLiofNecesarios;
+      
+      if (state.fortificacionMetodo === 'proteinAdjusted') {
+        // Modo Ajustado: Calcula gramos para cubrir el déficit de proteínas
+        gramosLiofNecesarios = deficitProteinas > 0 ?
+          (deficitProteinas * 100) / state.fortificador.composicion.proteinaLiof : 0;
+      } else {
+        // Modo Estándar: 1g por cada 25ml de leche
+        gramosLiofNecesarios = Math.ceil(volumenLecheDiario / 25);
+      }
+      
+      // 5. Calcular volumen y aportes del fortificador
+      const volumenFortificador = gramosLiofNecesarios / DEFAULT_VALUES.DENSIDAD_LIOFILIZADO;
 
-      // Actualizar resultados
-      updateState('resultados', {
-        aporteProteicoTotal: Math.round(aporteTotal.proteinas * 100) / 100,
-        aporteCarbohidratosTotal: Math.round(aporteTotal.lactosa * 100) / 100,
-        aporteLipidicoTotal: Math.round(aporteTotal.lipidos * 100) / 100,
-        gramosLiofNecesarios: Math.round(gramosLiofNecesarios * 100) / 100,
-        densidadEnergetica: Math.round(densidadEnergetica),
-        volumenFortificador: Math.round(volumenFortificador * 100) / 100,
-        optimizacionAlcanzada: Math.round(optimizacionAlcanzada),
-        esOptimo: optimizacionAlcanzada >= 80 && optimizacionAlcanzada <= 110 && esSeguro,
-        // Datos adicionales para debug
-        detalles: {
-          pesoKg,
-          requerimientoProteinas: Math.round(requerimientoProteinas * 100) / 100,
-          aporteLeche: Math.round(aporteLeche.proteinas * 100) / 100,
-          aporteFortificador: Math.round(aporteFortificador.proteinas * 100) / 100,
-          composicionUsada: composicionLeche
-        }
-      });
+      const aporteFortificador = {
+        proteinas: (gramosLiofNecesarios * state.fortificador.composicion.proteinaLiof) / 100,
+        lactosa: (gramosLiofNecesarios * state.fortificador.composicion.lactosaLiof) / 100,
+        lipidos: (gramosLiofNecesarios * state.fortificador.composicion.lipidosLiof) / 100
+      };
 
-      updateState('ui.mostrarResultados', true);
-      updateState('ui.errores', {});
+      // 6. Calcular totales finales
+      const aporteTotal = {
+        proteinas: aporteLeche.proteinas + aporteFortificador.proteinas,
+        lactosa: aporteLeche.lactosa + aporteFortificador.lactosa,
+        lipidos: aporteLeche.lipidos + aporteFortificador.lipidos
+      };
 
-    } catch (error) {
-      console.error('Error en cálculo:', error);
-      updateState('ui.errores.calculo', error.message || 'Error en el cálculo. Verifique los datos ingresados.');
-    } finally {
-      updateState('ui.calculando', false);
-    }
-  };
+      // 7. Calcular métricas finales
+      const densidadEnergetica = calcularEnergia(aporteTotal, pesoKg);
+      const optimizacionAlcanzada = requerimientoProteinas > 0 ?
+        Math.min(100, (aporteTotal.proteinas / requerimientoProteinas) * 100) : 0;
+
+      // 8. Verificar rangos de seguridad
+      const esSeguro = verificarSeguridadFortificacion(densidadEnergetica, pesoKg);
+
+      // Actualizar resultados
+      // ... (El resto del código de actualización de resultados se mantiene igual)
+      updateState('resultados', {
+        aporteProteicoTotal: Math.round(aporteTotal.proteinas * 100) / 100,
+        aporteCarbohidratosTotal: Math.round(aporteTotal.lactosa * 100) / 100,
+        aporteLipidicoTotal: Math.round(aporteTotal.lipidos * 100) / 100,
+        gramosLiofNecesarios: Math.round(gramosLiofNecesarios * 100) / 100,
+        densidadEnergetica: Math.round(densidadEnergetica),
+        volumenFortificador: Math.round(volumenFortificador * 100) / 100,
+        optimizacionAlcanzada: Math.round(optimizacionAlcanzada),
+        esOptimo: optimizacionAlcanzada >= 80 && optimizacionAlcanzada <= 110 && esSeguro,
+        // Datos adicionales para debug
+        detalles: {
+          pesoKg,
+          requerimientoProteinas: Math.round(requerimientoProteinas * 100) / 100,
+          aporteLeche: Math.round(aporteLeche.proteinas * 100) / 100,
+          aporteFortificador: Math.round(aporteFortificador.proteinas * 100) / 100,
+          composicionUsada: composicionLeche
+        }
+      });
+      
+      updateState('ui.mostrarResultados', true);
+      updateState('ui.errores', {});
+
+    } catch (error) {
+      console.error('Error en cálculo:', error);
+      updateState('ui.errores.calculo', error.message || 'Error en el cálculo. Verifique los datos ingresados.');
+    } finally {
+      updateState('ui.calculando', false);
+    }
+  };
 
   // Función auxiliar para ajustar composición por días de puerperio
   const ajustarPorDiasPuerperio = (composicionBase, diasPuerperio) => {
