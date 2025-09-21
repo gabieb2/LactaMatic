@@ -188,3 +188,99 @@
     align-items: stretch;
   }
 }
+
+/* Contenedor Flex para alinear los botones horizontalmente */
+.buttonGroup {
+  display: flex;
+  width: 100%;
+  margin-bottom: 25px;
+  /* CAMBIO CLAVE: Usa un valor alto para simular la forma de píldora */
+  border-radius: 30px; 
+  overflow: hidden; 
+  background-color: white;
+  /* Usaremos el color del borde de los campos de texto o de las secciones */
+  border: 1px solid #cbd5e0; 
+}
+
+/* Estilo base para cada botón individual */
+.toggleButton {
+  /* Diseño */
+  flex-grow: 1;
+  text-align: center;
+  padding: 10px 10px; /* Reducido para mejor balance */
+  font-size: 13px; /* Reducido para coincidir con otros textos de la interfaz */
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 30px; 
+
+  
+  /* Colores */
+  background-color: white; /* Fondo blanco (como los campos) cuando no está activo */
+  color: #718096; /* Color de texto gris suave (como las etiquetas) */
+  
+  /* Quitar bordes internos y de enfoque */
+  border: none;
+  outline: none;
+  
+  /* Transición suave para los efectos */
+  transition: all 0.2s ease;
+}
+
+/* Efecto al pasar el mouse (hover) */
+.toggleButton:hover {
+  background-color: #f7fafc; /* Color de fondo de .inputSection */
+  color: #4a5568; /* Color del texto del título */
+}
+
+/* Estilo para el botón ACTIVO (Seleccionado) */
+.active {
+  /* Colores - Usaremos el azul primario de enfoque (#3182ce) */
+  background-color: #3182ce; 
+  color: white; /* Texto blanco en el botón activo */
+  font-weight: 600; 
+  
+  /* Sombra más sutil y alineada con el estilo de enfoque de input */
+  box-shadow: none; /* Quitamos la sombra de botón genérico */
+}
+
+/* Efecto al pasar el mouse sobre el botón ACTIVO */
+.active:hover {
+  background-color: #2b6cb0; /* Un azul ligeramente más oscuro */
+  color: white;
+}
+
+/* Separadores internos */
+.toggleButton:not(:last-child) {
+  /* Usamos el color de borde de la sección */
+  border-right: 1px solid #e2e8f0; 
+}
+
+/* MARCADO DEL RANGO ÓPTIMO (3.5 y 4.5) */
+.rangeMarker {
+    position: absolute;
+    top: 0;
+    width: 2px; /* Un grosor visible para el marcador */
+    height: 100%;
+    background-color: #38a169; /* Verde (color óptimo) */
+    z-index: 2; /* Sobre el fondo, debajo de las etiquetas de texto */
+}
+
+/* Opcional: Estilo para resaltar la zona óptima entre los marcadores */
+.progressBar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    /* Usa las posiciones calculadas para crear un área de fondo */
+    left: 33.3%; 
+    width: 33.4%; /* 66.7% - 33.3% = 33.4% */
+    height: 100%;
+    background-color: rgba(56, 161, 105, 0.1); /* Sutil fondo verde claro */
+    z-index: 1;
+}
+
+/* Reafirmar los estilos de las etiquetas (Límites Absolutos) */
+.limitMin,
+.limitMax {
+    /* ... (mantener los estilos sutiles que acordamos) ... */
+    z-index: 3; /* Asegura que el texto esté encima de los marcadores y el fondo */
+}

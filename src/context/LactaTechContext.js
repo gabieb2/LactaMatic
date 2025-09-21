@@ -47,6 +47,7 @@ export const LactaTechProvider = ({ children }) => {
       tipoLeche: 'preterm', // 'term' | 'preterm'
       diasPuerperio: ''
     },
+    fortificacionMetodo: 'standard', // 'standard' | 'proteinAdjusted'
 
     // Datos de entrada - Fortificador
     fortificador: {
@@ -106,8 +107,11 @@ export const LactaTechProvider = ({ children }) => {
   // Función para calcular la fortificación
   const calcularFortificacion = () => {
     updateState('ui.calculando', true);
+      const pesoKg = parseFloat(state.paciente.peso) || 0;
+      const targetProteina = parseFloat(state.paciente.targetProteina) || 4.0;
+      const volumenLecheDiario = (parseFloat(state.paciente.volumenLeche) || 150) * pesoKg;
 
-    try {
+      try {
       // 1. Determinar composición de leche base
       let composicionLeche;
       if (state.lecheMetodo === 'manual') {
@@ -125,10 +129,20 @@ export const LactaTechProvider = ({ children }) => {
         composicionLeche = ajustarPorDiasPuerperio(composicionBase, diasPuerperio);
       }
 
+      // 1. Calcular cantidad de fortificador necesaria
+      let gramosLiofNecesarios;
+      if (state.fortificacionMetodo === 'proteinAdjusted') {
+        gramosLiofNecesarios = deficitProteinas > 0 ?
+          (deficitProteinas * 100) / state.fortificador.composicion.proteinaLiof : 0;
+        const volumenFortificador = gramosLiofNecesarios / DEFAULT_VALUES.DENSIDAD_LIOFILIZADO;
+
+      } else {
+        gramosLiofNecesarios = Math.ceil(volumenLecheDiario / 25);
+
+      }
+
       // 2. Calcular requerimientos diarios
-      const pesoKg = parseFloat(state.paciente.peso) || 0;
-      const targetProteina = parseFloat(state.paciente.targetProteina) || 4.0;
-      const volumenLecheDiario = (parseFloat(state.paciente.volumenLeche) || 150) * pesoKg;
+  
 
       // Validar datos mínimos
       if (pesoKg <= 0 || volumenLecheDiario <= 0) {
@@ -157,9 +171,15 @@ export const LactaTechProvider = ({ children }) => {
       const deficitProteinas = Math.max(0, requerimientoProteinas - aporteLeche.proteinas);
 
       // 5. Calcular cantidad de fortificador necesaria
-      const gramosLiofNecesarios = deficitProteinas > 0 ?
-        (deficitProteinas * 100) / state.fortificador.composicion.proteinaLiof : 0;
-      const volumenFortificador = gramosLiofNecesarios / DEFAULT_VALUES.DENSIDAD_LIOFILIZADO;
+      let volumenFortificador = 0;
+      if (state.fortificacionMetodo === 'proteinAdjusted') {
+        gramosLiofNecesarios = deficitProteinas > 0 ?
+          (deficitProteinas * 100) / state.fortificador.composicion.proteinaLiof : 0;
+        volumenFortificador = gramosLiofNecesarios / DEFAULT_VALUES.DENSIDAD_LIOFILIZADO;
+      } else {
+        gramosLiofNecesarios = Math.ceil(volumenLecheDiario / 25);
+        volumenFortificador = gramosLiofNecesarios / DEFAULT_VALUES.DENSIDAD_LIOFILIZADO;
+      }
 
       // 6. Calcular aportes del fortificador
       const aporteFortificador = {

@@ -21,7 +21,7 @@ function Header() {
       </div>
 
       <div className={styles.navigation}>
-        <Link href="inicio" className={styles.navItem}>Inicio</Link>
+        <Link href="media" className={styles.navItem}>Media</Link>
         <Link href="calculadora" className={`${styles.navItem} ${styles.navItemActive}`}>Calculadora</Link>
         <Link href="/help" className={styles.navItem}>Ayuda</Link>
       </div>
