@@ -387,3 +387,44 @@
     z-index: 1; 
     transition: width 0.4s ease-out;
 }
+/* ResultadosCalculados.module.css */
+.resultadosCalculados {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.resultadosContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  /* CORRECCIÓN: Quitamos el margin-bottom para que el contenido fluya hasta el final */
+  margin-bottom: 0;
+}
+
+/* ... (Resto de estilos de .sinResultados, .resultadoItem, etc.) ... */
+
+
+/* --- Área de Acción (Asegurando el flujo vertical) --- */
+
+.accionArea {
+  /* CORRECCIÓN: Margen fijo en lugar de 'auto' para seguir el flujo normal */
+  margin-top: 20px; 
+  
+  /* Estilos de integración visual */
+  padding-top: 15px; 
+  border-top: 1px solid #e2e8f0; 
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.botonesAccion {
+  /* ... (Estilos de botones se mantienen) ... */
+  width: 100%; 
+  display: flex;
+  gap: 15px; 
+  justify-content: flex-end; 
+  align-items: center;
+  margin-top: 15px; 
+}
