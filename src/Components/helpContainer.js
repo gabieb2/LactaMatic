@@ -31,8 +31,19 @@ function helpContainer() {
             Es una herramienta que ayuda a profesionales de la salud a calcular la fortificación adecuada de leche humana para bebés prematuros, según el aporte energético y proteico recomendado.
           </p>
           <p className={styles.ayudaDescripcion}>
-            Todos los valores fueron obtenidos de la guía de nutrición enteral ESPGHAN.
+            Todos los valores nutricionales recomendados fueron obtenidos de la guía de nutrición enteral ESPGHAN.
           </p>
+          <div className={styles.citationBox}>
+            <p>Los valores nutricionales recomendados se obtuvieron de la siguiente guía:</p>
+            <blockquote cite="https://doi.org/10.1097/MPG.0000000000003642">
+      <p>Embleton, N. D., et al. (2022). "Enteral Nutrition in Preterm Infants (2022): A Position Paper From the ESPGHAN Committee on Nutrition and Invited Experts". <em>Journal of Pediatric Gastroenterology and Nutrition</em>, 76(2), 248-268. <a href="https://doi.org/10.1097/MPG.0000000000003642" target="_blank">DOI: 10.1097/MPG.0000000000003642</a></p>
+    </blockquote></div>
+    <div className={styles.citationBox}>  
+            <p>Los datos de la composición de la Leche humana en función del tipo de puerperio y tiempo se obtuvieron del siguiente artículo científico:</p>
+            <blockquote cite="https://doi.org/10.1186/1471-2431-14-216">
+            <p>Gidrewicz, D. A., & Fenton, T. R. (2014). "A systematic review and meta-analysis of the nutrient content of preterm and term breast milk". <em>BMC Pediatrics</em>, 14(1), 216. DOI: <a href="https://doi.org/10.1186/1471-2431-14-216" target="_blank">10.1186/1471-2431-14-216</a></p>
+  </blockquote>
+</div>
         </section>
 
         <section id="como-usar">

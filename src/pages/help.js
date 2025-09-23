@@ -9,7 +9,7 @@ function Ayuda() {
   return (
     <div className={styles.pageContainer}>
       <Head>
-        <title>Chechomatic - Ayuda</title>
+        <title>Lactamatic - Ayuda</title>
         <meta name="description" content="Guía para utilizar la calculadora de fortificación de leche humana para prematuros" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />

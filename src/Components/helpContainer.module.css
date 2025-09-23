@@ -6,7 +6,7 @@
   justify-content: center;
   gap: 25px;
   padding: 30px;
-  background-color: #f7fafc;
+  background-color: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 10px;
   max-width: 700px;
@@ -109,4 +109,23 @@
   .ayudaBoton {
     width: 100%;
   }
+}
+.citationBox { /* Ya existe */
+  background-color: #f7fafc;
+  border: 1px solid #e2e6ea;
+  border-radius: 8px;
+  padding: 20px 25px;
+  margin: 25px 0;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.citationBox p {
+  color: #333; /* Forzamos el color del texto */
+}
+
+.citationBox blockquote {
+  /* Forzamos el color de fondo para el blockquote si está dentro del box */
+  background-color: transparent; 
+  padding: 0;
+  margin: 0;
 }
