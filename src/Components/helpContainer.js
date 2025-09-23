@@ -21,6 +21,7 @@ function helpContainer() {
             <li><a href="#interpretacion">Interpretación de los resultados</a></li>
             <li><a href="#ejemplo-practico">Ejemplo práctico</a></li>
             <li><a href="#preguntas-frecuentes">Preguntas frecuentes</a></li>
+            
             <li><a href="#mas-ayuda">¿Necesitás más ayuda?</a></li>
           </ul>
         </nav>
