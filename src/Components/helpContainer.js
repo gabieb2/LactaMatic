@@ -6,7 +6,7 @@ function helpContainer() {
     <div className={styles.centerContainer}>
       <div className={styles.ayudaContainer}>
         <div className={styles.ayudaTitulo}>
-          <h2>Centro de Ayuda de Chechomatic</h2>
+          <h2>Centro de Ayuda de Lactamatic</h2>
         </div>
 
         <p className={styles.ayudaDescripcion}>
@@ -16,7 +16,7 @@ function helpContainer() {
         {/* Índice / Tabla de contenidos */}
         <nav className={styles.ayudaIndice}>
           <ul>
-            <li><a href="#que-es">¿Qué es Chechomatic?</a></li>
+            <li><a href="#que-es">¿Qué es Lactomatic?</a></li>
             <li><a href="#como-usar">¿Cómo usar la calculadora?</a></li>
             <li><a href="#interpretacion">Interpretación de los resultados</a></li>
             <li><a href="#ejemplo-practico">Ejemplo práctico</a></li>
@@ -27,7 +27,7 @@ function helpContainer() {
         </nav>
 
         <section id="que-es">
-          <h3 className={styles.ayudaTitulo}>¿Qué es Chechomatic?</h3>
+          <h3 className={styles.ayudaTitulo}>¿Qué es Lactomatic?</h3>
           <p className={styles.ayudaDescripcion}>
             Es una herramienta que ayuda a profesionales de la salud a calcular la fortificación adecuada de leche humana para bebés prematuros, según el aporte energético y proteico recomendado.
           </p>
@@ -39,7 +39,7 @@ function helpContainer() {
             <blockquote cite="https://doi.org/10.1097/MPG.0000000000003642">
       <p>Embleton, N. D., et al. (2022). "Enteral Nutrition in Preterm Infants (2022): A Position Paper From the ESPGHAN Committee on Nutrition and Invited Experts". <em>Journal of Pediatric Gastroenterology and Nutrition</em>, 76(2), 248-268. <a href="https://doi.org/10.1097/MPG.0000000000003642" target="_blank">DOI: 10.1097/MPG.0000000000003642</a></p>
     </blockquote></div>
-    
+
     <div className={styles.citationBox}>  
             <p>Los datos de la composición de la Leche humana en función del tipo de puerperio y tiempo se obtuvieron del siguiente artículo científico:</p>
             <blockquote cite="https://doi.org/10.1186/1471-2431-14-216">
