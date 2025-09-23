@@ -21,7 +21,7 @@ function helpContainer() {
             <li><a href="#interpretacion">Interpretación de los resultados</a></li>
             <li><a href="#ejemplo-practico">Ejemplo práctico</a></li>
             <li><a href="#preguntas-frecuentes">Preguntas frecuentes</a></li>
-            
+
             <li><a href="#mas-ayuda">¿Necesitás más ayuda?</a></li>
           </ul>
         </nav>
@@ -39,6 +39,7 @@ function helpContainer() {
             <blockquote cite="https://doi.org/10.1097/MPG.0000000000003642">
       <p>Embleton, N. D., et al. (2022). "Enteral Nutrition in Preterm Infants (2022): A Position Paper From the ESPGHAN Committee on Nutrition and Invited Experts". <em>Journal of Pediatric Gastroenterology and Nutrition</em>, 76(2), 248-268. <a href="https://doi.org/10.1097/MPG.0000000000003642" target="_blank">DOI: 10.1097/MPG.0000000000003642</a></p>
     </blockquote></div>
+    
     <div className={styles.citationBox}>  
             <p>Los datos de la composición de la Leche humana en función del tipo de puerperio y tiempo se obtuvieron del siguiente artículo científico:</p>
             <blockquote cite="https://doi.org/10.1186/1471-2431-14-216">
