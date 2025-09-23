@@ -65,37 +65,32 @@ function ResultadosCalculados() {
       case 'proteina': {
         const porcentajeProteina = (resultados.aporteProteicoTotal ?? 0) / pesoKg;
         if (porcentajeProteina >= 3.5 && porcentajeProteina <= 4.5) return '(Dentro del rango)';
-        if (porcentajeProteina < 3.5) return '(Por debajo del mínimo)';
-        return '(Por encima del máximo)';
+        if (porcentajeProteina < 3.5) return '(Por debajo del mínimo 3.5g/kg/día)';
+        return '(Por encima del máximo 4.5g/kg/día)';
       }
 
       case 'lipidos': {
         const porcentajeLipidos = (resultados.aporteLipidicoTotal ?? 0) / pesoKg;
         if (porcentajeLipidos >= 4.8 && porcentajeLipidos <= 8.1) return '(Dentro del rango)';
-        if (porcentajeLipidos < 4.8) return '(Por debajo del mínimo)';
-        return '(Por encima del máximo)';
+        if (porcentajeLipidos < 4.8) return '(Por debajo del mínimo 4.8g/kg/día)';
+        return '(Por encima del máximo 8.1g/kg/día)';
       }
 
       case 'carbohidratos': {
         const porcentajeCarbohidratos = (resultados.aporteCarbohidratosTotal ?? 0) / pesoKg;
         if (porcentajeCarbohidratos >= 11 && porcentajeCarbohidratos <= 15) return '(Dentro del rango)';
-        if (porcentajeCarbohidratos < 11) return '(Por debajo del mínimo)';
-        return '(Por encima del máximo)';
+        if (porcentajeCarbohidratos < 11) return '(Por debajo del mínimo 11g/kg/día)';
+        return '(Por encima del máximo 15g/kg/día )';
       }
 
       case 'energia': {
         const valorEnergia = resultados.densidadEnergetica ?? 0;
         if (valorEnergia >= 115 && valorEnergia <= 140) return '(Dentro del rango)';
-        if (valorEnergia < 115) return '(Por debajo del mínimo)';
-        return '(Por encima del máximo)';
+        if (valorEnergia < 115) return '(Por debajo del mínimo 115kcal/kg/día)';
+        return '(Por encima del máximo 140kcal/kg/día)';
       }
       
-      // Agregado para el resultado circular, si aplica alguna regla de concentración.
-      case 'concentracion': {
-        const gramos = resultados.gramosLiofNecesarios ?? 0;
-        if (gramos > 0) return '(Concentración aplicada)';
-        return '';
-      }
+    
 
       default:
         return '';
@@ -131,15 +126,6 @@ function ResultadosCalculados() {
                 </>
               )}
             </button>
-
-            {ui.mostrarResultados && (
-              <button 
-                className={styles.btnReset}
-                onClick={handleReset}
-              >
-                Nuevo Cálculo
-              </button>
-            )}
           </div>
 
           {/* Errores */}
@@ -154,70 +140,143 @@ function ResultadosCalculados() {
           // Usando la clase resultadosGrid (asumiendo que la definiste para un layout de grilla)
           <div className={styles.resultadosGrid}> 
             {/* Resultado 1: Proteína */}
-            <div className={styles.resultadoItem}>
-              <h4 className={styles.resultadoLabel}>Aporte Proteico Total</h4>
-              <div className={styles.progressBar}>
-                <div 
-                  className={styles.progressFill} 
-                  style={{ 
-                    width: `${calcularPorcentajeBarra(resultados.aporteProteicoTotal, 'proteina')}%`,
-                    backgroundColor:
-                      (resultados.aporteProteicoTotal/resultados.detalles.pesoKg) < 3.5
-                        ? '#f6ad55'
-                        : (resultados.aporteProteicoTotal/resultados.detalles.pesoKg) <= 4.5
-                        ? '#38a169'
-                        : '#e53e3e'
-                  }}
-                ></div>
-              </div>
-              <p className={styles.resultadoValue}>
-                {resultados.aporteProteicoTotal} g/día {obtenerPorcentajeObjetivo('proteina', resultados)}
-              </p>
-            </div>
+<div className={styles.resultadoItem}>
+  <div className={styles.twoColumnLayout}>
+    {/* Left Column (8 col) */}
+    <div className={styles.mainProgressSection}>
+      <h4 className={styles.resultadoLabel}>Aporte Proteico Total</h4>
+      <div className={styles.progressBar}>
+        <div
+          className={styles.progressFill}
+          style={{
+            width: `${calcularPorcentajeBarra(resultados.aporteProteicoTotal, 'proteina')}%`,
+            backgroundColor:
+              (resultados.aporteProteicoTotal / resultados.detalles.pesoKg) < 3.5
+                ? '#f6ad55'
+                : (resultados.aporteProteicoTotal / resultados.detalles.pesoKg) <= 4.5
+                ? '#38a169'
+                : '#e53e3e',
+          }}
+        ></div>
+      </div>
+    </div>
 
-            {/* Resultado 2: Lípidos */}
+    {/* Right Column (4 col) */}
+    <div className={styles.rangeSection}>
+      <div className={styles.rightColumnContent}> {/* New container */}
+        <div className={styles.valueAndUnit}>
+          <p className={styles.resultadoValue}>
+            {resultados.aporteProteicoTotal}
+          </p>
+          <p className={styles.unitText}>g/día</p>
+        </div>
+        <div
+          className={styles.rangeBox}
+          style={{
+            backgroundColor:
+              (resultados.aporteProteicoTotal / resultados.detalles.pesoKg) < 3.5 ||
+              (resultados.aporteProteicoTotal / resultados.detalles.pesoKg) > 4.5
+                ? '#e53e3e' // Red for out of range
+                : '#38a169', // Green for in range
+          }}
+        >
+          <p className={styles.rangeText}>
+            {obtenerPorcentajeObjetivo('proteina', resultados)}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
             <div className={styles.resultadoItem}>
-              <h4 className={styles.resultadoLabel}>Aporte Lipidico Total</h4>
-              <div className={styles.progressBar}>
-                <div 
-                  className={styles.progressFill} 
-                  style={{ 
-                    width: `${calcularPorcentajeBarra(resultados.aporteLipidicoTotal, 'lipidos')}%`,
-                    backgroundColor:
-                      (resultados.aporteLipidicoTotal/resultados.detalles.pesoKg) < 4.8
-                        ? '#f6ad55'
-                        : (resultados.aporteLipidicoTotal/resultados.detalles.pesoKg) <= 8.1
-                        ? '#38a169'
-                        : '#e53e3e'
-                  }}
-                ></div>
-              </div>
-              <p className={styles.resultadoValue}>
-                {resultados.aporteLipidicoTotal} g/día {obtenerPorcentajeObjetivo('lipidos', resultados)}
-              </p>
-            </div>
+  <div className={styles.twoColumnLayout}>
+    <div className={styles.mainProgressSection}>
+      <h4 className={styles.resultadoLabel}>Aporte Lipídico Total</h4>
+      <div className={styles.progressBar}>
+        <div
+          className={styles.progressFill}
+          style={{
+            width: `${calcularPorcentajeBarra(resultados.aporteLipidicoTotal, 'lipidos')}%`,
+            backgroundColor:
+              (resultados.aporteLipidicoTotal / resultados.detalles.pesoKg) < 4.8
+                ? '#f6ad55'
+                : (resultados.aporteLipidicoTotal / resultados.detalles.pesoKg) <= 8.1
+                ? '#38a169'
+                : '#e53e3e',
+          }}
+        ></div>
+      </div>
+    </div>
+     <div className={styles.rangeSection}>
+      <div className={styles.rightColumnContent}> {/* New container */}
+        <div className={styles.valueAndUnit}>
+          <p className={styles.resultadoValue}>
+            {resultados.aporteLipidicoTotal} g/día
+          </p>
+        </div>
+        <div
+          className={styles.rangeBox}
+          style={{
+            backgroundColor:
+              (resultados.aporteLipidicoTotal / resultados.detalles.pesoKg) < 4.8 ||
+              (resultados.aporteLipidicoTotal / resultados.detalles.pesoKg) > 8.1
+                ? '#e53e3e'
+                : '#38a169',
+          }}
+        >
+          <p className={styles.rangeText}>
+            {obtenerPorcentajeObjetivo('lipidos', resultados)}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-            {/* Resultado 3: Carbohidratos */}
             <div className={styles.resultadoItem}>
-              <h4 className={styles.resultadoLabel}>Aporte Carbohidratos Total</h4>
-              <div className={styles.progressBar}>
-                <div 
-                  className={styles.progressFill} 
-                  style={{ 
-                    width: `${calcularPorcentajeBarra(resultados.aporteCarbohidratosTotal, 'carbohidratos')}%`,
-                    backgroundColor:
-                      (resultados.aporteCarbohidratosTotal/resultados.detalles.pesoKg) < 11
-                        ? '#f6ad55'
-                        : (resultados.aporteCarbohidratosTotal/resultados.detalles.pesoKg) <= 15
-                        ? '#38a169'
-                        : '#e53e3e'
-                  }}
-                ></div>
-              </div>
-              <p className={styles.resultadoValue}>
-                {resultados.aporteCarbohidratosTotal} g/día {obtenerPorcentajeObjetivo('carbohidratos', resultados)}
-              </p>
-            </div>
+  <div className={styles.twoColumnLayout}>
+    <div className={styles.mainProgressSection}>
+      <h4 className={styles.resultadoLabel}>Aporte Carbohidratos Total</h4>
+      <div className={styles.progressBar}>
+        <div
+          className={styles.progressFill}
+          style={{
+            width: `${calcularPorcentajeBarra(resultados.aporteCarbohidratosTotal, 'carbohidratos')}%`,
+            backgroundColor:
+              (resultados.aporteCarbohidratosTotal / resultados.detalles.pesoKg) < 11
+                ? '#f6ad55'
+                : (resultados.aporteCarbohidratosTotal / resultados.detalles.pesoKg) <= 15
+                ? '#38a169'
+                : '#e53e3e',
+          }}
+        ></div>
+      </div>
+    </div>
+    <div className={styles.rangeSection}>
+      <div className={styles.rightColumnContent}> {/* New container */}
+        <div className={styles.valueAndUnit}>
+          <p className={styles.resultadoValue}>
+            {resultados.aporteCarbohidratosTotal} g/día
+          </p>
+        </div>
+        <div
+          className={styles.rangeBox}
+          style={{
+            backgroundColor:
+              (resultados.aporteCarbohidratosTotal / resultados.detalles.pesoKg) < 11 ||
+              (resultados.aporteCarbohidratosTotal / resultados.detalles.pesoKg) > 15
+                ? '#e53e3e'
+                : '#38a169',
+          }}
+        >
+          <p className={styles.rangeText}>
+            {obtenerPorcentajeObjetivo('carbohidratos', resultados)}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
             {/* Resultado 4: Gramos de Fortificador */}
             <div className={styles.resultadoItem}>
@@ -230,28 +289,50 @@ function ResultadosCalculados() {
               </p>
             </div>
 
-            {/* Resultado 5: Densidad Energética */}
-            <div className={styles.resultadoItem}>
-              <h4 className={styles.resultadoLabel}>Densidad Energética</h4>
-              <div className={styles.progressBar}>
-                <div 
-                  className={styles.progressFill} 
-                  style={{ 
-                    width: `${calcularPorcentajeBarra(resultados.densidadEnergetica, 'energia')}%`,
-                    backgroundColor:
-                      resultados.densidadEnergetica < 115
-                        ? '#f6ad55'
-                        : resultados.densidadEnergetica <= 140
-                        ? '#38a169'
-                        : '#e53e3e'
-                  }}
-                ></div>
-              </div>
-              <p className={styles.resultadoValue}>
-                {resultados.densidadEnergetica} kcal/kg/día {obtenerPorcentajeObjetivo('energia', resultados)}
-              </p>
-            </div>
-
+           <div className={styles.resultadoItem}>
+  <div className={styles.twoColumnLayout}>
+    <div className={styles.mainProgressSection}>
+      <h4 className={styles.resultadoLabel}>Densidad Energética</h4>
+      <div className={styles.progressBar}>
+        <div
+          className={styles.progressFill}
+          style={{
+            width: `${calcularPorcentajeBarra(resultados.densidadEnergetica, 'energia')}%`,
+            backgroundColor:
+              resultados.densidadEnergetica < 115
+                ? '#f6ad55'
+                : resultados.densidadEnergetica <= 140
+                ? '#38a169'
+                : '#e53e3e',
+          }}
+        ></div>
+      </div>
+    </div>
+     <div className={styles.rangeSection}>
+      <div className={styles.rightColumnContent}> {/* New container */}
+        <div className={styles.valueAndUnit}>
+          <p className={styles.resultadoValue}>
+            {resultados.densidadEnergetica} kcal/kg/día
+          </p>
+        </div>
+        <div
+          className={styles.rangeBox}
+          style={{
+            backgroundColor:
+              resultados.densidadEnergetica < 115 ||
+              resultados.densidadEnergetica > 140
+                ? '#e53e3e'
+                : '#38a169',
+          }}
+        >
+          <p className={styles.rangeText}>
+            {obtenerPorcentajeObjetivo('energia', resultados)}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
             {/* Resultado Final (Panel de Resumen) */}
             <div className={`${styles.resultadoFinal} ${resultados.esOptimo ? styles.optimo : styles.suboptimo}`}>
               <div className={styles.resultadoFinalContent}>
@@ -292,7 +373,14 @@ function ResultadosCalculados() {
           </div>
         )}
 
-        
+        {ui.mostrarResultados && (
+              <button 
+                className={styles.btnReset}
+                onClick={handleReset}
+              >
+                Nuevo Cálculo
+              </button>
+            )}  
         
       </div> 
     </div>
