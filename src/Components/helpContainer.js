@@ -27,7 +27,7 @@ function helpContainer() {
         </nav>
 
         <section id="que-es">
-          <h3 className={styles.ayudaTitulo}>¿Qué es Lactomatic?</h3>
+          <h3 className={styles.ayudaTitulo}>¿Qué es Lactamatic?</h3>
           <p className={styles.ayudaDescripcion}>
             Es una herramienta que ayuda a profesionales de la salud a calcular la fortificación adecuada de leche humana para bebés prematuros, según el aporte energético y proteico recomendado.
           </p>
@@ -35,7 +35,7 @@ function helpContainer() {
             Todos los valores nutricionales recomendados fueron obtenidos de la guía de nutrición enteral ESPGHAN.
           </p>
           <div className={styles.citationBox}>
-            <p>Los valores nutricionales recomendados se obtuvieron de la siguiente guía:</p>
+            <p>Los valores nutricionales recomendados se obtuvieron de la guía:</p>
             <blockquote cite="https://doi.org/10.1097/MPG.0000000000003642">
       <p>Embleton, N. D., et al. (2022). "Enteral Nutrition in Preterm Infants (2022): A Position Paper From the ESPGHAN Committee on Nutrition and Invited Experts". <em>Journal of Pediatric Gastroenterology and Nutrition</em>, 76(2), 248-268. <a href="https://doi.org/10.1097/MPG.0000000000003642" target="_blank">DOI: 10.1097/MPG.0000000000003642</a></p>
     </blockquote></div>
@@ -51,25 +51,27 @@ function helpContainer() {
         <section id="como-usar">
           <h3 className={styles.ayudaTitulo}>¿Cómo usar la calculadora?</h3>
           <ol className={styles.ayudaLista}>
-            <li>Ingresá los valores de análisis de la leche: <strong>proteínas</strong>, <strong>grasa</strong> y <strong>lactosa</strong>.</li>
+            <li>Seleccioná tu tipo de entrada (Datos medidos o estimados)</li>
+            <li>Ingresa los parámetros del niño o los valores de análisis de la leche</li>
             <li>Seleccioná el fortificador que utilizás.</li>
-            <li>La calculadora te mostrará los valores resultantes: densidad energética, aporte proteico, de carbohidratos, lipídico y gramos de fortificador a añadir.</li>
+            <li>Seleccioná el tipo de fortificación (Standard, ajustada por proteínas)</li>
+            <li>La calculadora te mostrará la cantidad de fortificador a suministrar así como los valores resultantes: densidad energética, aporte proteico, de carbohidratos, lipídico y gramos de fortificador a añadir.</li>
           </ol>
         </section>
 
         <section id="interpretacion">
           <h3 className={styles.ayudaTitulo}>Interpretación de los resultados</h3>
           <ul className={styles.ayudaLista}>
-            <li><strong>Verde:</strong> dentro del rango recomendado.</li>
-            <li><strong>Naranja:</strong> por debajo del rango.</li>
-            <li><strong>Rojo:</strong> Por arriba de los rangos máximos recomendados.</li>
+            <li style={{ color: 'green' }}><strong>Verde:</strong> Dentro del rango recomendado.</li>
+            <li style={{ color: 'orange' }}><strong>Naranja:</strong> Por debajo del rango.</li>
+            <li style={{ color: 'red' }}><strong>Rojo:</strong> Por arriba de los rangos máximos recomendados.</li>
           </ul>
         </section>
 
         <section id="ejemplo-practico">
           <h3 className={styles.ayudaTitulo}>Ejemplo práctico</h3>
           <p className={styles.ayudaDescripcion}>
-            Ingresando: proteínas: 1.2 g, grasa: 4.5 g, lactosa: 6.8 g, la calculadora indicará una densidad energética de 72 kcal/100ml y recomendará la cantidad de fortificador ideal.
+            Ingresando los parámetros medidos: proteínas: 1.2 g, grasa: 4.5 g, lactosa: 6.8 g, y suponiendo un peso de 1kg y una ingesta de 150ml/kg/día la calculadora indicará 6gramos de fortificador (si utilizamos la fortificación standard) así como 6.67 si usamos fortificación dirigida, con el objetivo de llegar a 4gr/kg/día de proteinas.
           </p>
         </section>
 
