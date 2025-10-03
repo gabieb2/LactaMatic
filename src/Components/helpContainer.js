@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './helpContainer.module.css';  // Si tienes un archivo CSS externo, o puedes aplicar estilos en línea
+import Fortificador from '../Components/fortifier';
 
 function helpContainer() {
   return (
@@ -90,6 +91,11 @@ function helpContainer() {
           <p className={styles.ayudaDescripcion}>
             Contactanos a <a href="mailto:gabriel.beinotti@unc.edu.ar">gabriel.beinotti@unc.edu.ar</a> o consultá la documentación técnica completa.
           </p>
+        </section>
+
+        <section id="tabla-fortificadores">
+          <h3 className={styles.ayudaTitulo}>Tipos de fortificadores</h3>
+          <Fortificador />
         </section>
       </div>
     </div>

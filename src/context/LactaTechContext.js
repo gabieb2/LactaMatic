@@ -14,9 +14,9 @@ const DEFAULT_VALUES = {
   // Fortificador comercial estándar
   FORTIFICADOR_COMERCIAL: {
     nombre: 'Fortificador Comercial Nutriprem.',
-    proteinaLiof: 33,  // g/100g liofilizado
-    lactosaLiof: 37,   // g/100g liofilizado  
-    lipidosLiof: 18    // g/100g liofilizado
+    proteinaLiof: 0,  // g/100g liofilizado
+    lactosaLiof: 0,   // g/100g liofilizado  
+    lipidosLiof: 0    // g/100g liofilizado
   },
 
   // Rangos objetivo nutricionales
@@ -83,6 +83,33 @@ export const LactaTechProvider = ({ children }) => {
       errores: {}
     }
   });
+
+const setFortificadorComercial = (fila) => {
+  const toNumber = (val) => {
+    if (!val) return 0;
+    // Reemplazar coma decimal por punto y convertir
+    const num = Number(String(val).replace(",", "."));
+    return isNaN(num) ? 0 : num;
+  };
+
+  const composicion = {
+    nombre: fila[1] || '',
+    proteinaLiof: toNumber(fila[2]),
+    lactosaLiof: toNumber(fila[3]),
+    lipidosLiof: toNumber(fila[4]),
+  };
+
+  console.log("Guardando fortificador en state:", composicion);
+
+  setState(prev => ({
+    ...prev,
+    fortificador: {
+      tipo: 'comercial',
+      composicion
+    }
+  }));
+};
+
 
   // Función para actualizar cualquier parte del estado
   const updateState = (path, value) => {
@@ -304,6 +331,7 @@ export const LactaTechProvider = ({ children }) => {
       updateState,
       calcularFortificacion,
       resetear,
+      setFortificadorComercial,
       DEFAULT_VALUES
     }}>
       {children}

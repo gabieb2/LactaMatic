@@ -1,9 +1,13 @@
 import React from 'react';
 import styles from './EntradaDatos.module.css';
 import { useLactaTech } from '../context/LactaTechContext';
+import { useData } from '@/context/DataContext';
+import Fortificador from './fortifier';
+
 
 function EntradaDatos() {
-  const { state, updateState } = useLactaTech();
+  const { state, updateState, setFortificadorComercial } = useLactaTech();
+  const { fortificador, } = useData();
 
   const handleLecheMetodoChange = (metodo) => {
     updateState('lecheMetodo', metodo);
@@ -12,6 +16,22 @@ function EntradaDatos() {
   const handleFortificacionMetodoChange = (metodo) => {
     updateState('fortificacionMetodo', metodo);
   };
+
+const handleFortificadorChange = (e) => {
+  const selectedIndex = e.target.selectedIndex;
+  const filaSeleccionada = options[selectedIndex];
+
+  console.log("Cambio de fortificador:", {
+    selectedIndex,
+    filaSeleccionada,
+    options
+  });
+
+  if (filaSeleccionada) {
+    setFortificadorComercial(filaSeleccionada);
+  }
+};
+
 
   const handleLecheManualChange = (campo, valor) => {
     updateState(`lecheManual.${campo}`, valor);
@@ -24,6 +44,10 @@ function EntradaDatos() {
   const handlePacienteChange = (campo, valor) => {
     updateState(`paciente.${campo}`, valor);
   };
+  
+
+  const options = Array.isArray(fortificador) ? fortificador.slice(1) : [];
+
 
   return (
     <><div className={styles.entradaDatos}>
@@ -112,9 +136,13 @@ function EntradaDatos() {
         <p className={styles.inputSubtitle}>Proteina, Lactosa y Lípidos</p>
 
         <div className={styles.fortificadorSelector}>
-          <select className={styles.fortificadorDropdown}>
-            <option value="Nutriprem">NutriPrem (BAGO) 33P-37La-18L (g/100g)</option>
-            <option value="personalizado">Personalizado</option>
+          <select onChange={handleFortificadorChange} className={styles.fortificadorDropdown}>
+            {options.map((fila, i) => (
+              <option key={i} value={fila[1]}>
+             {fila[1]} ({fila[0]} — {fila[2]}g P / {fila[3]}g L / {fila[4]}g F)
+              </option>
+            ))}
+        <option value="personalizado">Personalizado</option>
           </select>
         </div>
       </div>
@@ -202,6 +230,10 @@ function EntradaDatos() {
         </div>       
        </div>
       )}
+      </div>
+      {/* Sección 4: Selector de Fortificador Comercial */}
+      <div>
+      <fortifier fortificadores={fortificador} />
       </div>
 
     </div></>

@@ -1,35 +1,31 @@
-import Papa from 'papaparse';
 
-export const fetchGoogleSheetsData = async (sheetId, gid = '0') => {
+const sheetId = "1DRCYIAQQxe146zQ35EhFtomb4sI-S3HVjecJtrVJJcQ"; // ID de tu sheet
+const apiKey = "AIzaSyDBPlvNl-Paf3sGM0ka265L_ALEUbiWLmM"; // tu API key de Google Cloud
+
+//fetchGoogleSheetsData(sheetId, "Hoja1!A1:E10", apiKey)
+//  .then(data => {
+//    console.log(data); // [["col1","col2"], ["dato1","dato2"], ...]
+//  });
+
+export const fetchGoogleSheetsData = async (sheetId, range = "Fortificadores!A1:E10", apiKey) => {
   try {
-    // Check if the input is a published spreadsheet URL
-    const isPublishedUrl = sheetId.startsWith('2PACX-');
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(range)}?key=${apiKey}`;
 
-    const url = isPublishedUrl
-      ? `https://docs.google.com/spreadsheets/d/e/${sheetId}/pub?gid=${gid}&single=true&output=csv`
-      : `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
+    console.log("Fetching URL:", url);
 
     const response = await fetch(url);
 
+    console.log("Status:", response.status);
+
     if (!response.ok) {
-      throw new Error('Failed to fetch data from Google Sheets');
+      const errorText = await response.text();
+      throw new Error(`Failed to fetch data: ${response.status} - ${errorText}`);
     }
 
-    const csvText = await response.text();
-
-    return new Promise((resolve, reject) => {
-      Papa.parse(csvText, {
-        header: true,
-        complete: (results) => {
-          resolve(results.data);
-        },
-        error: (error) => {
-          reject(error);
-        }
-      });
-    });
+    const data = await response.json();
+    return data.values || [];
   } catch (error) {
-    console.error('Error fetching Google Sheets data:', error);
+    console.error("Error fetching Google Sheets data:", error);
     throw error;
   }
-}; 
+};
