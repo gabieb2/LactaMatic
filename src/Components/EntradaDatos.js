@@ -139,7 +139,7 @@ const handleFortificadorChange = (e) => {
           <select onChange={handleFortificadorChange} className={styles.fortificadorDropdown}>
             {options.map((fila, i) => (
               <option key={i} value={fila[1]}>
-             {fila[1]} ({fila[0]} — {fila[2]}g P / {fila[3]}g L / {fila[4]}g F)
+             {fila[1]} ( {fila[2]}g P / {fila[3]}g L / {fila[4]}g F)
               </option>
             ))}
         <option value="personalizado">Personalizado</option>
