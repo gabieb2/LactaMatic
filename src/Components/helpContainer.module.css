@@ -20,6 +20,7 @@
   font-weight: 700;
   color: #2d3748;
   text-align: center;
+  margin: 5px 0;
 }
 
 /* Subtítulo o descripción */
@@ -28,13 +29,44 @@
   border: 1px solid #e2e6ea;
   border-radius: 8px;
   padding: 20px 25px;
-  margin: 25px 0;
+  margin: 25px 5px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   font-size: 14px;
   color: #4a5568;
   text-align: center;
   line-height: 1.5;
   max-width: 600px;
+    
+
+}
+
+.ayudaDisclaimer {
+  background-color: #f97343;
+  border: 1px solid #e2e6ea;
+  border-radius: 10px;
+  padding: 10px 10px;
+  padding-top: 20px ;
+  padding-bottom: 20px ;
+  margin: 2px 0;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  font-size: 14px;
+  color: #520e0e;
+  text-align: center;
+  line-height: 1.5;
+  max-width: 600px;
+
+}
+
+.ayudaIndice {
+  background-color: #cfe6eb;
+  border: 1px solid #e2e6ea;
+  border-radius: 10px;
+  padding: 10px 10px;
+  margin: 2px 0;
+  font-size: 24px;
+  color: #4a5568;
+  text-align: left;
+  list-style-type: none;
 }
 
 /* Lista de pasos o instrucciones */

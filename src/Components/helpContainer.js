@@ -10,9 +10,22 @@ function helpContainer() {
           <h2>Centro de Ayuda de Lactamatic</h2>
         </div>
 
+        
+
+        <section id="Disclaimer">
+          <p className={styles.ayudaDisclaimer}>
+          <h3 className={styles.ayudaTitulo}>Advertencia</h3>
+            Esta herramienta está destinada únicamente a profesionales de la salud. No debe ser utilizada como un sustituto del juicio clínico.
+            El uso de esta herramienta debe ser complementado con la evaluación clínica del paciente y la consideración de las características individuales de cada caso.
+          </p>
+          
+
+        </section>
+
         <p className={styles.ayudaDescripcion}>
           Bienvenido al asistente de uso de la Calculadora de Fortificación de Leche Humana. Aquí te explicamos cómo utilizarla paso a paso.
         </p>
+        
 
         {/* Índice / Tabla de contenidos */}
         <nav className={styles.ayudaIndice}>
@@ -26,6 +39,7 @@ function helpContainer() {
             <li><a href="#mas-ayuda">¿Necesitás más ayuda?</a></li>
           </ul>
         </nav>
+        
 
         <section id="que-es">
           <h3 className={styles.ayudaTitulo}>¿Qué es Lactamatic?</h3>
@@ -38,8 +52,9 @@ function helpContainer() {
           <div className={styles.citationBox}>
             <p>Los valores nutricionales recomendados se obtuvieron de la guía:</p>
             <blockquote cite="https://doi.org/10.1097/MPG.0000000000003642">
-      <p>Embleton, N. D., et al. (2022). "Enteral Nutrition in Preterm Infants (2022): A Position Paper From the ESPGHAN Committee on Nutrition and Invited Experts". <em>Journal of Pediatric Gastroenterology and Nutrition</em>, 76(2), 248-268. <a href="https://doi.org/10.1097/MPG.0000000000003642" target="_blank">DOI: 10.1097/MPG.0000000000003642</a></p>
-    </blockquote></div>
+            <p>Embleton, N. D., et al. (2022). "Enteral Nutrition in Preterm Infants (2022): A Position Paper From the ESPGHAN Committee on Nutrition and Invited Experts". <em>Journal of Pediatric Gastroenterology and Nutrition</em>, 76(2), 248-268. <a href="https://doi.org/10.1097/MPG.0000000000003642" target="_blank">DOI: 10.1097/MPG.0000000000003642</a></p>
+            </blockquote>
+           </div>
 
     <div className={styles.citationBox}>  
             <p>Los datos de la composición de la Leche humana en función del tipo de puerperio y tiempo se obtuvieron del siguiente artículo científico:</p>
@@ -48,6 +63,11 @@ function helpContainer() {
   </blockquote>
 </div>
         </section>
+
+       
+
+
+
 
         <section id="como-usar">
           <h3 className={styles.ayudaTitulo}>¿Cómo usar la calculadora?</h3>

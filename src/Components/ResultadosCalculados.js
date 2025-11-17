@@ -31,10 +31,10 @@ function ResultadosCalculados() {
 
     // Límites de visualización (amplios)
     const limitesVisuales = {
-      proteina: { min: 2.5, max: 5.5 }, 
-      lipidos: { min: 3.0, max: 10.0 }, 
-      carbohidratos: { min: 9.0, max: 17.0 }, 
-      energia: { min: 95, max: 165 }, 
+      proteina: { min: 1, max: 5.5 }, 
+      lipidos: { min: 1, max: 10.0 }, 
+      carbohidratos: { min: 3, max: 17.0 }, 
+      energia: { min: 40, max: 165 }, 
     };
 
     const limites = limitesVisuales[tipo];
@@ -140,7 +140,7 @@ function ResultadosCalculados() {
           // Usando la clase resultadosGrid (asumiendo que la definiste para un layout de grilla)
           <div className={styles.resultadosGrid}> 
             {/* Resultado 1: Proteína */}
-<div className={styles.resultadoItem}>
+            <div className={styles.resultadoItem}>
   <div className={styles.twoColumnLayout}>
     {/* Left Column (8 col) */}
     <div className={styles.mainProgressSection}>
