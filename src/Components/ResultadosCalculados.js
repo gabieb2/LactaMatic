@@ -341,7 +341,7 @@ function ResultadosCalculados() {
                   {resultados.esOptimo ? '✓ Dentro de rangos seguros' : '⚠ Revisar parámetros'}
                 </p>
                 <p className={styles.resultadoFinalDetalle}>
-                  Vol. fortificador: {resultados.volumenFortificador} ml/100ml leche
+                 {/*  Vol. fortificador: {resultados.volumenFortificador} ml/100ml leche */}
                 </p>
                 <p className={styles.resultadoFinalDetalle}>
                   Densidad: 1.4 g/ml aplicada
@@ -351,8 +351,12 @@ function ResultadosCalculados() {
                     <summary className={styles.detallesSummary}>Ver detalles del cálculo</summary>
                     <div className={styles.detallesContent}>
                       <p><strong>Requerimiento:</strong> {resultados.detalles.requerimientoProteinas} g/día</p>
-                      <p><strong>Aporte proteico leche:</strong> {resultados.detalles.aporteLeche} g/día</p>
-                      <p><strong>Aporte proteico fortificador:</strong> {resultados.detalles.aporteFortificador} g/día</p>
+                      <p><strong>Aporte proteico leche:</strong> {resultados.detalles.aporteLecheProteinas} g/día</p>
+                      <p><strong>Aporte proteico fortificador:</strong> {resultados.detalles.aporteFortificadorProteinas} g/día</p>
+                      <p><strong>Aporte lipídico leche:</strong> {resultados.detalles.aporteLecheLipidos} g/día</p>
+                      <p><strong>Aporte lipídico fortificador:</strong> {resultados.detalles.aporteFortificadorLipidos} g/día</p>
+                      <p><strong>Aporte carbohidratos leche:</strong> {resultados.detalles.aporteLecheCarbohidratos} g/día</p>
+                      <p><strong>Aporte carbohidratos fortificador:</strong> {resultados.detalles.aporteFortificadorCarbohidratos} g/día</p>
                       <p><strong>Composición usada:</strong> P:{resultados.detalles.composicionUsada?.proteina} Lac:{resultados.detalles.composicionUsada?.lactosa} Li:{resultados.detalles.composicionUsada?.lipidos}</p>
                     </div>
                   </details>

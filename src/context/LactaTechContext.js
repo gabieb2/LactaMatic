@@ -224,13 +224,18 @@ const setFortificadorComercial = (fila) => {
         volumenFortificador: Math.round(volumenFortificador * 100) / 100,
         optimizacionAlcanzada: Math.round(optimizacionAlcanzada),
         esOptimo: optimizacionAlcanzada >= 80 && optimizacionAlcanzada <= 110 && esSeguro,
+
         // Datos adicionales para debug
         detalles: {
           pesoKg,
           requerimientoProteinas: Math.round(requerimientoProteinas * 100) / 100,
-          aporteLeche: Math.round(aporteLeche.proteinas * 100) / 100,
-          aporteFortificador: Math.round(aporteFortificador.proteinas * 100) / 100,
-          composicionUsada: composicionLeche
+          aporteLecheProteinas: Math.round(aporteLeche.proteinas * 100) / 100,
+          aporteFortificadorProteinas: Math.round(aporteFortificador.proteinas * 100) / 100,
+          composicionUsada: composicionLeche,
+          aporteLecheLipidos: Math.round(aporteLeche.lipidos * 100) / 100,
+          aporteFortificadorLipidos: Math.round(aporteFortificador.lipidos * 100) / 100,
+          aporteLecheCarbohidratos: Math.round(aporteLeche.lactosa * 100) / 100,
+          aporteFortificadorCarbohidratos: Math.round(aporteFortificador.lactosa * 100) / 100,
         }
       });
       
