@@ -207,6 +207,7 @@ const setFortificadorComercial = (fila) => {
 
       // 7. Calcular métricas finales
       const densidadEnergetica = calcularEnergia(aporteTotal, pesoKg);
+      const energiaTotal = calcularEnergiaTotal(aporteTotal);
       const optimizacionAlcanzada = requerimientoProteinas > 0 ?
         Math.min(100, (aporteTotal.proteinas / requerimientoProteinas) * 100) : 0;
 
@@ -216,11 +217,13 @@ const setFortificadorComercial = (fila) => {
       // Actualizar resultados
       // ... (El resto del código de actualización de resultados se mantiene igual)
       updateState('resultados', {
+
         aporteProteicoTotal: Math.round(aporteTotal.proteinas * 100) / 100,
         aporteCarbohidratosTotal: Math.round(aporteTotal.lactosa * 100) / 100,
         aporteLipidicoTotal: Math.round(aporteTotal.lipidos * 100) / 100,
         gramosLiofNecesarios: Math.round(gramosLiofNecesarios * 100) / 100,
         densidadEnergetica: Math.round(densidadEnergetica),
+        energiaTotal: Math.round(energiaTotal),
         volumenFortificador: Math.round(volumenFortificador * 100) / 100,
         optimizacionAlcanzada: Math.round(optimizacionAlcanzada),
         esOptimo: optimizacionAlcanzada >= 80 && optimizacionAlcanzada <= 110 && esSeguro,
@@ -281,13 +284,26 @@ const setFortificadorComercial = (fila) => {
   // Función auxiliar para calcular energía más precisa
   const calcularEnergia = (aporteTotal, peso) => {
     // Fórmula: 4 kcal/g proteína + 4 kcal/g lactosa + 9 kcal/g lípidos
-    const energiaTotal =
-      (aporteTotal.proteinas * 4) +
-      (aporteTotal.lactosa * 4) +
-      (aporteTotal.lipidos * 9);
+    const energiaProteina = (aporteTotal.proteinas * 4);
+    const energiaLactosa = (aporteTotal.lactosa * 4);
+    const energiaLipidos = (aporteTotal.lipidos * 9);
+    const energiaTotal = energiaProteina + energiaLactosa + energiaLipidos;
+    
 
     // Retornar kcal/kg/día
     return peso > 0 ? energiaTotal / peso : 0;
+  };
+
+   const calcularEnergiaTotal = (aporteTotal) => {
+    // Fórmula: 4 kcal/g proteína + 4 kcal/g lactosa + 9 kcal/g lípidos
+    const energiaProteina = (aporteTotal.proteinas * 4);
+    const energiaLactosa = (aporteTotal.lactosa * 4);
+    const energiaLipidos = (aporteTotal.lipidos * 9);
+    const energiaTotal = energiaProteina + energiaLactosa + energiaLipidos;
+    
+
+    // Retornar kcal/kg/día
+    return  energiaTotal;
   };
 
   // Función para verificar seguridad de la fortificación

@@ -333,6 +333,29 @@ function ResultadosCalculados() {
     </div>
   </div>
 </div>
+
+
+
+
+<div className={styles.resultadoItem}>
+              <h4 className={styles.resultadoLabel}>Indicadores Clínicos</h4>
+              <div className={styles.resultadoFinalStatus}>
+                      <p><strong>Ratio Proteina-Energia:</strong> {((100 * resultados.aporteProteicoTotal) / (resultados.energiaTotal)).toFixed(2)}g/100kcal</p>
+                      <p><strong>Ratio Energía Proteica/Energía total:</strong> {Math.round((resultados.aporteProteicoTotal*4)/(resultados.energiaTotal)*100)}%</p>
+                      <p><strong>Energía proteica :</strong> {(resultados.aporteProteicoTotal * 4)} kcal</p>
+                      <p><strong>Energía no proteica:</strong> {Math.round(resultados.aporteLipidicoTotal * 9) + (resultados.aporteCarbohidratosTotal * 4)} kcal</p>
+                      <p><strong>Energía lipidica:</strong> {(resultados.aporteLipidicoTotal * 9)} kcal</p>
+                      <p><strong>Energía carbohidratos:</strong> {(resultados.aporteCarbohidratosTotal * 4)} kcal</p>
+                      <p><strong>Ratio energía carbohidratos vs energía no proteica:</strong> {((resultados.aporteCarbohidratosTotal * 4) / ((resultados.aporteLipidicoTotal * 9) + (resultados.aporteCarbohidratosTotal * 4)) * 100).toFixed(2)}%</p>
+                      <p><strong>Ratio energía lipidica vs energía no proteica:</strong> {((resultados.aporteLipidicoTotal * 9) / ((resultados.aporteLipidicoTotal * 9) + (resultados.aporteCarbohidratosTotal * 4)) * 100).toFixed(2)}%</p>
+                      
+                    </div>
+    
+</div>
+
+
+
+
             {/* Resultado Final (Panel de Resumen) */}
             <div className={`${styles.resultadoFinal} ${resultados.esOptimo ? styles.optimo : styles.suboptimo}`}>
               <div className={styles.resultadoFinalContent}>
@@ -362,12 +385,17 @@ function ResultadosCalculados() {
                   </details>
                 )}
               </div>
+             
               <div className={styles.resultadoFinalPorcentaje}>
                 <span className={styles.porcentajeNumero}>{resultados.optimizacionAlcanzada}%</span>
                 <span className={styles.porcentajeLabel}>Optimización</span>
               </div>
             </div>
           </div>
+
+        
+
+          
         ) : (
           <div className={styles.sinResultados}>
             <div className={styles.placeholderContent}>
@@ -376,6 +404,8 @@ function ResultadosCalculados() {
             </div>
           </div>
         )}
+
+        
 
         {ui.mostrarResultados && (
               <button 
